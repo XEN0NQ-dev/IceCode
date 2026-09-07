@@ -10,7 +10,7 @@
     
     <!-- Tagi SEO dla wyszukiwarek -->
     <meta name="description" content="IceCODE - profesjonalne projekty webowe, pluginy, skrypty, boty Discord oraz grafiki.">
-    <meta name="keywords" content="icecode, pluginy, skrypty, boty discord, strony www, budowle">
+    <meta name="keywords" content="icecode, pluginy, skrypty, boty discord, strony www, budowle, grafiki">
     <meta name="author" content="IceCODE & XEN0NQ">
 
     <style>
@@ -26,7 +26,6 @@
             background-color: #080b12;
             color: #ffffff;
             overflow-x: hidden;
-            /* Efekt kratki w tle + cieniowanie w stylu 777code */
             background-image: 
                 radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.07) 0%, transparent 50%),
                 linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
@@ -35,7 +34,6 @@
             background-attachment: fixed;
         }
 
-        /* Główny kontener strony głównej */
         #main-site-content {
             display: block;
         }
@@ -44,7 +42,6 @@
             display: none;
         }
 
-        /* Pływające menu nawigacyjne */
         nav {
             display: flex;
             justify-content: space-between;
@@ -99,7 +96,6 @@
             color: #38bdf8;
         }
 
-        /* Przycisk Panel Klienta w nawigacji */
         .client-panel-btn {
             background: transparent;
             border: 1px solid #38bdf8;
@@ -119,7 +115,6 @@
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
         }
 
-        /* Sekcja Główna (Hero) – powiększona, aby statystyki były schowane poniżej */
         .hero {
             display: flex;
             justify-content: space-between;
@@ -210,7 +205,6 @@
             border-radius: 20px;
         }
 
-        /* Sekcja Statystyk */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -247,7 +241,6 @@
             font-weight: 600;
         }
 
-        /* Sekcje ogólne */
         section {
             width: 85%;
             max-width: 1200px;
@@ -271,10 +264,9 @@
             font-size: 1.1rem;
         }
 
-        /* Siatka ofert */
         .offers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
         }
 
@@ -301,7 +293,6 @@
             font-weight: 600;
         }
 
-        /* Widok podstrony */
         .subpage-view {
             display: none;
             width: 85%;
@@ -314,7 +305,6 @@
             display: block;
         }
 
-        /* Przycisk Powrót ze strzałką w lewo */
         .back-btn {
             display: inline-flex;
             align-items: center;
@@ -373,41 +363,42 @@
             font-weight: 600;
         }
 
-        .portfolio-images-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .portfolio-img-card {
-            background: rgba(8, 11, 18, 0.85);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .portfolio-img-card img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-        }
-
-        .portfolio-img-card p {
-            padding: 15px;
-            color: #94a3b8;
-            font-size: 0.9rem;
+        .empty-portfolio {
             text-align: center;
+            color: #94a3b8;
+            font-style: italic;
+            padding: 40px;
+            font-size: 1.1rem;
         }
 
-        /* Sekcja Opinii */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        /* Sekcja Opinii - Przesuwany Karuzelowy Pasek (Marquee) */
+        .reviews-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .reviews-track {
+            display: flex;
             gap: 25px;
-            justify-content: center;
+            width: max-content;
+            animation: scrollReviews 35s linear infinite;
+        }
+
+        .reviews-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollReviews {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         .review-card {
@@ -419,6 +410,8 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            width: 380px;
+            flex-shrink: 0;
         }
 
         .review-header {
@@ -454,7 +447,6 @@
             line-height: 1.6;
         }
 
-        /* Sekcja Zespołu */
         .team-grid {
             display: flex;
             justify-content: center;
@@ -490,78 +482,6 @@
             font-size: 0.85rem;
         }
 
-        /* Powiadomienie (Toast) */
-        #toast-notification {
-            position: fixed;
-            bottom: 60px;
-            right: -420px;
-            background: rgba(14, 20, 33, 0.98);
-            border: 1px solid #ef4444;
-            color: #ffffff;
-            padding: 16px 24px 22px 24px;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            z-index: 99999;
-            transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            width: 320px;
-            overflow: hidden;
-        }
-
-        #toast-notification.show {
-            right: 30px;
-        }
-
-        .toast-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .toast-title {
-            font-weight: bold;
-            color: #ef4444;
-            font-size: 0.95rem;
-        }
-
-        .toast-close {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0 5px;
-        }
-
-        .toast-close:hover {
-            color: #fff;
-        }
-
-        .toast-body {
-            font-size: 0.9rem;
-            color: #94a3b8;
-        }
-
-        .toast-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 4px;
-            background: #ef4444;
-            width: 100%;
-            border-bottom-left-radius: 14px;
-            border-bottom-right-radius: 14px;
-            animation: progressAnim 4s linear forwards;
-        }
-
-        @keyframes progressAnim {
-            0% { width: 100%; }
-            100% { width: 0%; }
-        }
-
-        /* Stopka */
         footer {
             text-align: center;
             padding: 50px 0;
@@ -608,7 +528,7 @@
                 <li><a href="#opinie">Opinie</a></li>
                 <li><a href="#zespol">Zespół</a></li>
             </ul>
-            <a href="https://discord.gg/3fgWkc2cj" target="_blank" class="client-panel-btn">Panel Klienta</a>
+            <a href="https://discord.gg/7WudMvsMg" target="_blank" class="client-panel-btn">Panel Klienta</a>
         </nav>
 
         <!-- Sekcja Główna (Hero) -->
@@ -617,7 +537,7 @@
                 <h1><span>IceCODE</span><br>Profesjonalne projekty webowe!</h1>
                 <p>Zaufaj nam i stwórz z nami nowoczesne aplikacje oraz strony internetowe dopasowane do Twoich potrzeb.</p>
                 <div class="hero-buttons">
-                    <a href="https://discord.gg/3fgWkc2cj" target="_blank" class="btn-primary">Złóż zamówienie</a>
+                    <a href="https://discord.gg/7WudMvsMg" target="_blank" class="btn-primary">Złóż zamówienie</a>
                     <a href="#oferty" class="btn-secondary">Zobacz ofertę</a>
                 </div>
             </div>
@@ -635,7 +555,7 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-number">0</div>
-                    <div class="stat-label">Odwiedzin</div>
+                    <div class="stat-label">Odwiedziny</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">50</div>
@@ -651,43 +571,110 @@
                 <p>Wybierz interesującą Cię usługę</p>
             </div>
             <div class="offers-grid">
-                <div class="offer-card" onclick="openSubpage('budowle')"><h3>Budowle</h3></div>
+                <div class="offer-card" onclick="openSubpage('skrypty')"><h3>Skrypty</h3></div>
+                <div class="offer-card" onclick="openSubpage('pluginy')"><h3>Pluginy</h3></div>
+                <div class="offer-card" onclick="openSubpage('grafiki')"><h3>Grafiki</h3></div>
                 <div class="offer-card" onclick="openSubpage('boty')"><h3>Boty Discord</h3></div>
                 <div class="offer-card" onclick="openSubpage('strony')"><h3>Strony WWW</h3></div>
             </div>
         </section>
 
-        <!-- 3. Sekcja Opinii -->
+        <!-- 3. Sekcja Opinii (Przesuwany w lewo karuzelowy pasek) -->
         <section id="opinie">
             <div class="section-title">
                 <h2>Opinie</h2>
                 <p>Co myślą o nas nasi klienci?</p>
             </div>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="review-header">
-                        <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
-                        <div class="review-author-info">
-                            <h4>Klient IceCODE</h4>
-                            <span>Zweryfikowany Klient</span>
+            <div class="reviews-container">
+                <div class="reviews-track">
+                    <!-- Zestaw opinii 1 -->
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <div class="review-author-info">
+                               <h4>Klient IceCODE</h4>
+                               <span>Zweryfikowany Klient</span>
+                            </div>
                         </div>
+                        <p>“Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni”</p>
                     </div>
-                    <p>“Świetna jakość usług, dobre podejście do klienta oraz szybka realizacja zamówień. Mogę polecić każdemu IceCODE kto szuka profesjonalnych rozwiązań.”</p>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
-                        <div class="review-author-info">
-                            <h4>Klient IceCODE</h4>
-                            <span>Zweryfikowany Klient</span>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <div class="review-author-info">
+                                <h4>Klient IceCODE</h4>
+                                <span>Zweryfikowany Klient</span>
+                            </div>
                         </div>
+                        <p>“Witam to znow ja Kupiłem Na ice code Bota Na discord Rekrutacja,ticket,weryfikacja <br>Propsy dla icecode”</p>
                     </div>
-                    <p>“Mega fajne wykonanie i co najważniejsze tanie oraz profesjonalne podejście do klienta.”</p>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <div class="review-author-info">
+                                <h4>Klient IceCODE</h4>
+                                <span>Zweryfikowany Klient</span>
+                            </div>
+                        </div>
+                        <p>“Szczerze powiem bez zamulania prosto z serca odkryłem tego typka z jakiegoś ticketa na serwerze gdzie jestem w administracji napisałem na pv o logo na mój serwer i opinia jest jednoznaczna : KUR NIE ZNAHDZIECIE TAK ZAJEBISTEGO I ZA TAKA CENE LOGO TO KOGO KOSZTOWALO TYLE CO 1 LIZAK W SKLEPIE”</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <div class="review-author-info">
+                                <h4>Klient IceCODE</h4>
+                                <span>Zweryfikowany Klient</span>
+                            </div>
+                        </div>
+                        <p>“MOJA SZCZERA OPINIA NA TEMAT SERWERA ICECODE<br>IceCoDE To najlepszy Discord z informacjami i innymi Od kiedy Zakupiłem Strefę Premium Mam Dostęp Do rzeczy które wspomagają mi w budowie Swojego Serwer Również Do Montażu<br><br>Dziekuje Bardzo za pomoc przy zakupie strefy premium i pomocy przy jednej bardzo dla mnie ważniej sprawie”</p>
+                    </div>
+
+                    <!-- Duplikat zestawu opinii dla idealnie płynnego zapętlenia (infinite marquee) -->
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <div class="review-author-info">
+                                <h4>Klient IceCODE</h4>
+                                <span>Zweryfikowany Klient</span>
+                            </div>
+                        </div>
+                        <p>“Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni”</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <div class="review-author-info">
+                                <h4>Klient IceCODE</h4>
+                                <span>Zweryfikowany Klient</span>
+                            </div>
+                        </div>
+                        <p>“Witam to znow ja Kupiłem Na ice code Bota Na discord Rekrutacja,ticket,weryfikacja <br>Propsy dla icecode”</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <div class="review-author-info">
+                                <h4>Klient IceCODE</h4>
+                                <span>Zweryfikowany Klient</span>
+                            </div>
+                        </div>
+                        <p>“Szczerze powiem bez zamulania prosto z serca odkryłem tego typka z jakiegoś ticketa na serwerze gdzie jestem w administracji napisałem na pv o logo na mój serwer i opinia jest jednoznaczna : KUR NIE ZNAHDZIECIE TAK ZAJEBISTEGO I ZA TAKA CENE LOGO TO KOGO KOSZTOWALO TYLE CO 1 LIZAK W SKLEPIE”</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <div class="review-author-info">
+                                <h4>Klient IceCODE</h4>
+                                <span>Zweryfikowany Klient</span>
+                            </div>
+                        </div>
+                        <p>“MOJA SZCZERA OPINIA NA TEMAT SERWERA ICECODE<br>IceCoDE To najlepszy Discord z informacjami i innymi Od kiedy Zakupiłem Strefę Premium Mam Dostęp Do rzeczy które wspomagają mi w budowie Swojego Serwer Również Do Montażu<br><br>Dziekuje Bardzo za pomoc przy zakupie strefy premium i pomocy przy jednej bardzo dla mnie ważniej sprawie”</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. Sekcja Zespół -->
+        <!-- 4. Sekcja Zespół (Tylko najważniejszy CEO) -->
         <section id="zespol">
             <div class="section-title">
                 <h2>Zespół</h2>
@@ -695,12 +682,7 @@
             </div>
             <div class="team-grid">
                 <div class="team-card">
-                    <h3>XEN0NQ</h3>
-                    <div class="team-role">CEO</div>
-                    <p>Założyciel projektu</p>
-                </div>
-                <div class="team-card">
-                    <h3>Oklapek</h3>
+                    <h3>⌈ᴄᴇᴏ⌋ ▪ 𝚡𝚆𝚘𝚓𝚝𝚒</h3>
                     <div class="team-role">CEO</div>
                     <p>Założyciel projektu</p>
                 </div>
@@ -708,76 +690,74 @@
         </section>
     </div>
 
-    <!-- Podstrona: Strony WWW -->
-    <div id="subpage-strony" class="subpage-view">
+    <!-- Podstrona: Skrypty (Pusta) -->
+    <div id="subpage-skrypty" class="subpage-view">
         <button class="back-btn" onclick="closeSubpages()">
             <span>←</span> Powrót
         </button>
         <div class="subpage-box">
-            <h2>Portfolio: Strony WWW</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>XEN0NQ</span></span>
-            <div class="portfolio-images-grid">
-                <div class="portfolio-img-card">
-                    <img src="https://i.imgur.com/0xPf7Rx.png" alt="Projekt strony WWW 1">
-                    <p>Realizacja projektu strony internetowej #1</p>
-                </div>
-                <div class="portfolio-img-card">
-                    <img src="https://i.imgur.com/M7sHpxx.png" alt="Projekt strony WWW 2">
-                    <p>Realizacja projektu strony internetowej #2</p>
-                </div>
+            <h2>Portfolio: Skrypty</h2>
+            <span class="author-tag">Projekt stworzony przez: <span>IceCODE Team</span></span>
+            <div class="empty-portfolio">
+                Tutaj wkrótce pojawią się realizacje.
             </div>
         </div>
     </div>
 
-    <!-- Podstrona: Boty Discord -->
+    <!-- Podstrona: Pluginy (Pusta) -->
+    <div id="subpage-pluginy" class="subpage-view">
+        <button class="back-btn" onclick="closeSubpages()">
+            <span>←</span> Powrót
+        </button>
+        <div class="subpage-box">
+            <h2>Portfolio: Pluginy</h2>
+            <span class="author-tag">Projekt stworzony przez: <span>IceCODE Team</span></span>
+            <div class="empty-portfolio">
+                Tutaj wkrótce pojawią się realizacje.
+            </div>
+        </div>
+    </div>
+
+    <!-- Podstrona: Grafiki (Pusta) -->
+    <div id="subpage-grafiki" class="subpage-view">
+        <button class="back-btn" onclick="closeSubpages()">
+            <span>←</span> Powrót
+        </button>
+        <div class="subpage-box">
+            <h2>Portfolio: Grafiki</h2>
+            <span class="author-tag">Projekt stworzony przez: <span>IceCODE Team</span></span>
+            <div class="empty-portfolio">
+                Tutaj wkrótce pojawią się realizacje.
+            </div>
+        </div>
+    </div>
+
+    <!-- Podstrona: Boty Discord (Pusta) -->
     <div id="subpage-boty" class="subpage-view">
         <button class="back-btn" onclick="closeSubpages()">
             <span>←</span> Powrót
         </button>
         <div class="subpage-box">
             <h2>Portfolio: Boty Discord</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>XEN0NQ</span></span>
-            <div class="portfolio-images-grid">
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/ayfdzYe.png" alt="Bot Discord 1"><p>Panel bota #1</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/7Gp9oqf.png" alt="Bot Discord 2"><p>Panel bota #2</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/zsa3GHj.png" alt="Bot Discord 3"><p>Panel bota #3</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/1PD06jR.png" alt="Bot Discord 4"><p>Panel bota #4</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/ENXrGqV.png" alt="Bot Discord 5"><p>Panel bota #5</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/ouomppL.png" alt="Bot Discord 6"><p>Panel bota #6</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/uQPzbBO.png" alt="Bot Discord 7"><p>Panel bota #7</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/iLHQie0.png" alt="Bot Discord 8"><p>Panel bota #8</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/1EEpr7y.png" alt="Bot Discord 9"><p>Panel bota #9</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/fMVllrL.png" alt="Bot Discord 10"><p>Panel bota #10</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/w8QzaTL.png" alt="Bot Discord 11"><p>Panel bota #11</p></div>
-                <div class="portfolio-img-card"><img src="https://i.imgur.com/fsEOnFz.png" alt="Bot Discord 12"><p>Panel bota #12</p></div>
+            <span class="author-tag">Projekt stworzony przez: <span>IceCODE Team</span></span>
+            <div class="empty-portfolio">
+                Tutaj wkrótce pojawią się realizacje.
             </div>
         </div>
     </div>
 
-    <!-- Podstrona: Budowle -->
-    <div id="subpage-budowle" class="subpage-view">
+    <!-- Podstrona: Strony WWW (Pusta) -->
+    <div id="subpage-strony" class="subpage-view">
         <button class="back-btn" onclick="closeSubpages()">
             <span>←</span> Powrót
         </button>
         <div class="subpage-box">
-            <h2>Portfolio: Budowle</h2>
+            <h2>Portfolio: Strony WWW</h2>
             <span class="author-tag">Projekt stworzony przez: <span>IceCODE Team</span></span>
-            <div class="portfolio-images-grid">
-                <div class="portfolio-img-card">
-                    <p>Tutaj wkrótce pojawią się zdjęcia zrealizowanych budowli.</p>
-                </div>
+            <div class="empty-portfolio">
+                Tutaj wkrótce pojawią się realizacje.
             </div>
         </div>
-    </div>
-
-    <!-- Powiadomienie (Toast) -->
-    <div id="toast-notification">
-        <div class="toast-header">
-            <span class="toast-title">Powiadomienie</span>
-            <button class="toast-close" onclick="hideToast()">&times;</button>
-        </div>
-        <div class="toast-body" id="toast-message">Komunikat</div>
-        <div class="toast-progress"></div>
     </div>
 
     <!-- Stopka -->
@@ -788,10 +768,7 @@
 
     <!-- Skrypt -->
     <script>
-        let toastTimeout;
-
         function openSubpage(subpageName) {
-            hideToast();
             document.getElementById('main-site-content').classList.add('hidden');
             document.querySelectorAll('.subpage-view').forEach(el => el.classList.remove('active'));
             document.getElementById('subpage-' + subpageName).classList.add('active');
@@ -802,29 +779,6 @@
             document.querySelectorAll('.subpage-view').forEach(el => el.classList.remove('active'));
             document.getElementById('main-site-content').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast-notification');
-            const msgBody = document.getElementById('toast-message');
-            msgBody.innerText = message;
-
-            const progress = toast.querySelector('.toast-progress');
-            progress.style.animation = 'none';
-            void progress.offsetWidth;
-            progress.style.animation = 'progressAnim 4s linear forwards';
-
-            toast.classList.add('show');
-
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                hideToast();
-            }, 4000);
-        }
-
-        function hideToast() {
-            const toast = document.getElementById('toast-notification');
-            toast.classList.remove('show');
         }
     </script>
 
