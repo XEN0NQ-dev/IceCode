@@ -447,39 +447,47 @@
             line-height: 1.6;
         }
 
-        .team-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
+        /* Styl grup zespołu */
+        .team-groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
         }
 
-        .team-card {
+        .team-group-card {
             background: rgba(14, 20, 33, 0.7);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(56, 189, 248, 0.15);
-            padding: 35px;
+            padding: 25px;
             border-radius: 16px;
             text-align: center;
-            width: 260px;
+            transition: transform 0.3s, border-color 0.3s;
         }
 
-        .team-card h3 {
-            color: #ffffff;
-            font-size: 1.2rem;
-            margin-bottom: 5px;
+        .team-group-card:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
         }
 
-        .team-role {
+        .team-group-title {
             color: #38bdf8;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+            padding-bottom: 8px;
         }
 
-        .team-card p {
-            color: #94a3b8;
-            font-size: 0.85rem;
+        .team-members-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .team-member-name {
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 600;
         }
 
         footer {
@@ -592,8 +600,8 @@
                         <div class="review-header">
                             <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
                             <div class="review-author-info">
-                               <h4>Klient IceCODE</h4>
-                               <span>Zweryfikowany Klient</span>
+                                <h4>Klient IceCODE</h4>
+                                <span>Zweryfikowany Klient</span>
                             </div>
                         </div>
                         <p>“Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni”</p>
@@ -629,7 +637,7 @@
                         <p>“MOJA SZCZERA OPINIA NA TEMAT SERWERA ICECODE<br>IceCoDE To najlepszy Discord z informacjami i innymi Od kiedy Zakupiłem Strefę Premium Mam Dostęp Do rzeczy które wspomagają mi w budowie Swojego Serwer Również Do Montażu<br><br>Dziekuje Bardzo za pomoc przy zakupie strefy premium i pomocy przy jednej bardzo dla mnie ważniej sprawie”</p>
                     </div>
 
-                    <!-- Duplikat zestawu opinii dla idealnie płynnego zapętlenia (infinite marquee) -->
+                    <!-- Duplikat zestawu opinii dla idealnie płynnego zapętlenia -->
                     <div class="review-card">
                         <div class="review-header">
                             <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
@@ -674,17 +682,98 @@
             </div>
         </section>
 
-        <!-- 4. Sekcja Zespół (Tylko najważniejszy CEO) -->
+        <!-- 4. Sekcja Zespół (Podzielona na grupy) -->
         <section id="zespol">
             <div class="section-title">
                 <h2>Zespół</h2>
                 <p>Ludzie odpowiedzialni za projekt</p>
             </div>
-            <div class="team-grid">
-                <div class="team-card">
-                    <h3>⌈ᴄᴇᴏ⌋ ▪ 𝚡𝚆𝚘𝚓𝚝𝚒</h3>
-                    <div class="team-role">CEO</div>
-                    <p>Założyciel projektu</p>
+            <div class="team-groups-grid">
+                <!-- CEO -->
+                <div class="team-group-card">
+                    <div class="team-group-title">CEO</div>
+                    <div class="team-members-list">
+                        <span class="team-member-name">⌈ᴄᴇᴏ⌋ ▪ 𝚡𝚆𝚘𝚓𝚝𝚒</span>
+                    </div>
+                </div>
+
+                <!-- Official Dev -->
+                <div class="team-group-card">
+                    <div class="team-group-title">Official Dev</div>
+                    <div class="team-members-list">
+                        <span class="team-member-name">xKamix</span>
+                        <span class="team-member-name">Grzesiek</span>
+                    </div>
+                </div>
+
+                <!-- Manager -->
+                <div class="team-group-card">
+                    <div class="team-group-title">Manager</div>
+                    <div class="team-members-list">
+                        <span class="team-member-name">Ricki2Wrony</span>
+                    </div>
+                </div>
+
+                <!-- Montażysta -->
+                <div class="team-group-card">
+                    <div class="team-group-title">Montażysta</div>
+                    <div class="team-members-list">
+                        <span class="team-member-name">n9cx</span>
+                    </div>
+                </div>
+
+                <!-- Budowniczy -->
+                <div class="team-group-card">
+                    <div class="team-group-title">Budowniczy</div>
+                    <div class="team-members-list">
+                        <span class="team-member-name">Siabadaba</span>
+                        <span class="team-member-name">Kira</span>
+                    </div>
+                </div>
+
+                <!-- Web Developer -->
+                <div class="team-group-card">
+                    <div class="team-group-title">Web Developer</div>
+                    <div class="team-members-list">
+                        <span class="team-member-name">podatekkk</span>
+                        <span class="team-member-name">XEN0NQ</span>
+                    </div>
+                </div>
+
+                <!-- Bot Developer -->
+                <div class="team-group-card">
+                    <div class="team-group-title">Bot Developer</div>
+                    <div class="team-members-list">
+                        <span class="team-member-name">Baxi_1 [URLOP]</span>
+                        <span class="team-member-name">Kryki Dev</span>
+                    </div>
+                </div>
+
+                <!-- Model Maker -->
+                <div class="team-group-card">
+                    <div class="team-group-title">Model Maker</div>
+                    <div class="team-members-list">
+                        <span class="team-member-name">Nerux</span>
+                    </div>
+                </div>
+
+                <!-- Skript Maker -->
+                <div class="team-group-card">
+                    <div class="team-group-title">Skript Maker</div>
+                    <div class="team-members-list">
+                        <span class="team-member-name">Scorpion</span>
+                        <span class="team-member-name">t3xi_</span>
+                        <span class="team-member-name">Czarominus</span>
+                    </div>
+                </div>
+
+                <!-- Premium Creator -->
+                <div class="team-group-card">
+                    <div class="team-group-title">Premium Creator</div>
+                    <div class="team-members-list">
+                        <span class="team-member-name">K0mandos</span>
+                        <span class="team-member-name">Timi</span>
+                    </div>
                 </div>
             </div>
         </section>
