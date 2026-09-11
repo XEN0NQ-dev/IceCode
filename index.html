@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IceCODE - Profesjonalne projekty webowe, pluginy i boty</title>
+    <title>ICECODE - Profesjonalne projekty webowe, pluginy i boty</title>
     
     <!-- Ikona (favicon) na karcie przeglądarki -->
     <link rel="icon" type="image/png" href="https://imgur.com/urSgbzj.png">
     
     <!-- Tagi SEO dla wyszukiwarek -->
-    <meta name="description" content="IceCODE - profesjonalne projekty webowe, pluginy, skrypty, boty Discord oraz grafiki.">
+    <meta name="description" content="ICECODE - profesjonalne projekty webowe, pluginy, skrypty, boty Discord oraz grafiki.">
     <meta name="keywords" content="icecode, pluginy, skrypty, boty discord, strony www, budowle, grafiki">
-    <meta name="author" content="IceCODE & XEN0NQ">
+    <meta name="author" content="ICECODE">
 
     <style>
         * {
@@ -34,12 +34,12 @@
             background-attachment: fixed;
         }
 
-        #main-site-content {
-            display: block;
+        .site-view {
+            display: none;
         }
 
-        #main-site-content.hidden {
-            display: none;
+        .site-view.active {
+            display: block;
         }
 
         nav {
@@ -64,6 +64,7 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .logo-img {
@@ -90,6 +91,7 @@
             color: #94a3b8;
             font-size: 0.95rem;
             transition: color 0.3s ease;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
@@ -371,6 +373,168 @@
             font-size: 1.1rem;
         }
 
+        /* Panel Klienta Styling (wzorowany na Twoim screenie) */
+        .client-panel-container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 60px auto;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            background: rgba(12, 17, 28, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .client-panel-left {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.08), transparent 60%);
+        }
+
+        .client-panel-left h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .client-panel-left h2 span {
+            color: #38bdf8;
+            background: linear-gradient(to right, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .client-panel-left p {
+            color: #94a3b8;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .client-panel-right {
+            padding: 60px;
+            background: rgba(8, 11, 18, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .discord-login-box {
+            text-align: center;
+        }
+
+        .discord-icon-wrapper {
+            width: 50px;
+            height: 50px;
+            background: rgba(88, 101, 242, 0.15);
+            border: 1px solid rgba(88, 101, 242, 0.4);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+        }
+
+        .discord-icon-wrapper svg {
+            width: 26px;
+            height: 26px;
+            fill: #5865F2;
+        }
+
+        .discord-login-box h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .discord-login-box p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .btn-discord-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: #5865F2;
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-discord-login:hover {
+            background: #4752c4;
+            transform: translateY(-2px);
+        }
+
+        .panel-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 25px 0;
+            color: #475569;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .panel-divider::before, .panel-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .panel-divider::before { margin-right: 15px; }
+        .panel-divider::after { margin-left: 15px; }
+
+        .btn-shop-redirect {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-shop-redirect:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+        }
+
+        @media(max-width: 900px) {
+            .client-panel-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Sekcja Opinii - Przesuwany Karuzelowy Pasek (Marquee) */
         .reviews-container {
             width: 100%;
@@ -393,12 +557,8 @@
         }
 
         @keyframes scrollReviews {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         .review-card {
@@ -447,7 +607,7 @@
             line-height: 1.6;
         }
 
-        /* Styl sekcji Zespół (układ w dół, po 2 okienka obok siebie) */
+        /* Styl sekcji Zespół */
         .team-container {
             display: flex;
             flex-direction: column;
@@ -497,7 +657,6 @@
             border-color: #38bdf8;
         }
 
-        /* Jeśli w kategorii jest tylko 1 osoba, rozciągnij ją na całą szerokość */
         .team-members-grid .team-member-box:only-child {
             grid-column: span 2;
         }
@@ -533,36 +692,36 @@
 </head>
 <body>
 
-    <!-- Główna zawartość strony -->
-    <div id="main-site-content">
+    <!-- WIDOK 1: Główna strona -->
+    <div id="view-home" class="site-view active">
         <!-- Menu nawigacyjne -->
         <nav>
-            <a href="#" class="logo-area">
-                <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="logo-img">
-                <span class="logo-text">IceCODE</span>
+            <a onclick="switchView('home')" class="logo-area">
+                <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="logo-img">
+                <span class="logo-text">ICECODE</span>
             </a>
             <ul class="nav-links">
-                <li><a href="#">Strona Główna</a></li>
+                <li><a onclick="switchView('home')">Strona Główna</a></li>
                 <li><a href="#statystyki">Statystyki</a></li>
                 <li><a href="#oferty">Usługi</a></li>
                 <li><a href="#opinie">Opinie</a></li>
                 <li><a href="#zespol">Zespół</a></li>
             </ul>
-            <a href="https://discord.gg/7WudMvsMg" target="_blank" class="client-panel-btn">Panel Klienta</a>
+            <a onclick="switchView('panel')" class="client-panel-btn">Panel Klienta</a>
         </nav>
 
         <!-- Sekcja Główna (Hero) -->
         <section class="hero">
             <div class="hero-text">
-                <h1><span>IceCODE</span><br>Profesjonalne projekty webowe!</h1>
+                <h1><span>ICECODE</span><br>Profesjonalne projekty webowe!</h1>
                 <p>Zaufaj nam i stwórz z nami nowoczesne aplikacje oraz strony internetowe dopasowane do Twoich potrzeb.</p>
                 <div class="hero-buttons">
-                    <a href="https://discord.gg/7WudMvsMg" target="_blank" class="btn-primary">Złóż zamówienie</a>
+                    <a onclick="switchView('panel')" class="btn-primary">Złóż zamówienie</a>
                     <a href="#oferty" class="btn-secondary">Zobacz ofertę</a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Duże Logo">
+                <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Duże Logo">
             </div>
         </section>
 
@@ -599,7 +758,7 @@
             </div>
         </section>
 
-        <!-- 3. Sekcja Opinii (Przesuwany w lewo karuzelowy pasek) -->
+        <!-- 3. Sekcja Opinii -->
         <section id="opinie">
             <div class="section-title">
                 <h2>Opinie</h2>
@@ -607,12 +766,11 @@
             </div>
             <div class="reviews-container">
                 <div class="reviews-track">
-                    <!-- Zestaw opinii 1 -->
                     <div class="review-card">
                         <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
                             <div class="review-author-info">
-                                <h4>Klient IceCODE</h4>
+                                <h4>Klient ICECODE</h4>
                                 <span>Zweryfikowany Klient</span>
                             </div>
                         </div>
@@ -620,9 +778,9 @@
                     </div>
                     <div class="review-card">
                         <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
                             <div class="review-author-info">
-                                <h4>Klient IceCODE</h4>
+                                <h4>Klient ICECODE</h4>
                                 <span>Zweryfikowany Klient</span>
                             </div>
                         </div>
@@ -630,9 +788,9 @@
                     </div>
                     <div class="review-card">
                         <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
                             <div class="review-author-info">
-                                <h4>Klient IceCODE</h4>
+                                <h4>Klient ICECODE</h4>
                                 <span>Zweryfikowany Klient</span>
                             </div>
                         </div>
@@ -640,21 +798,21 @@
                     </div>
                     <div class="review-card">
                         <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
                             <div class="review-author-info">
-                                <h4>Klient IceCODE</h4>
+                                <h4>Klient ICECODE</h4>
                                 <span>Zweryfikowany Klient</span>
                             </div>
                         </div>
-                        <p>“MOJA SZCZERA OPINIA NA TEMAT SERWERA ICECODE<br>IceCoDE To najlepszy Discord z informacjami i innymi Od kiedy Zakupiłem Strefę Premium Mam Dostęp Do rzeczy które wspomagają mi w budowie Swojego Serwer Również Do Montażu<br><br>Dziekuje Bardzo za pomoc przy zakupie strefy premium i pomocy przy jednej bardzo dla mnie ważniej sprawie”</p>
+                        <p>“MOJA SZCZERA OPINIA NA TEMAT SERWERA ICECODE<br>ICECODE To najlepszy Discord z informacjami i innymi Od kiedy Zakupiłem Strefę Premium Mam Dostęp Do rzeczy które wspomagają mi w budowie Swojego Serwer Również Do Montażu”</p>
                     </div>
 
-                    <!-- Duplikat zestawu opinii dla idealnie płynnego zapętlenia -->
+                    <!-- Duplikat paska dla płynnej pętli -->
                     <div class="review-card">
                         <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
                             <div class="review-author-info">
-                                <h4>Klient IceCODE</h4>
+                                <h4>Klient ICECODE</h4>
                                 <span>Zweryfikowany Klient</span>
                             </div>
                         </div>
@@ -662,9 +820,9 @@
                     </div>
                     <div class="review-card">
                         <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
                             <div class="review-author-info">
-                                <h4>Klient IceCODE</h4>
+                                <h4>Klient ICECODE</h4>
                                 <span>Zweryfikowany Klient</span>
                             </div>
                         </div>
@@ -672,9 +830,9 @@
                     </div>
                     <div class="review-card">
                         <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
                             <div class="review-author-info">
-                                <h4>Klient IceCODE</h4>
+                                <h4>Klient ICECODE</h4>
                                 <span>Zweryfikowany Klient</span>
                             </div>
                         </div>
@@ -682,19 +840,19 @@
                     </div>
                     <div class="review-card">
                         <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="IceCODE Logo" class="review-avatar">
+                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
                             <div class="review-author-info">
-                                <h4>Klient IceCODE</h4>
+                                <h4>Klient ICECODE</h4>
                                 <span>Zweryfikowany Klient</span>
                             </div>
                         </div>
-                        <p>“MOJA SZCZERA OPINIA NA TEMAT SERWERA ICECODE<br>IceCoDE To najlepszy Discord z informacjami i innymi Od kiedy Zakupiłem Strefę Premium Mam Dostęp Do rzeczy które wspomagają mi w budowie Swojego Serwer Również Do Montażu<br><br>Dziekuje Bardzo za pomoc przy zakupie strefy premium i pomocy przy jednej bardzo dla mnie ważniej sprawie”</p>
+                        <p>“MOJA SZCZERA OPINIA NA TEMAT SERWERA ICECODE<br>ICECODE To najlepszy Discord z informacjami i innymi Od kiedy Zakupiłem Strefę Premium Mam Dostęp Do rzeczy które wspomagają mi w budowie Swojego Serwer Również Do Montażu”</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. Sekcja Zespół (W dół, z 2 okienkami obok siebie w każdej kategorii) -->
+        <!-- 4. Sekcja Zespół (XEN0NQ usunięty z Web Dev) -->
         <section id="zespol">
             <div class="section-title">
                 <h2>Zespół</h2>
@@ -743,12 +901,11 @@
                     </div>
                 </div>
 
-                <!-- Web Developer -->
+                <!-- Web Developer (XEN0NQ usunięty) -->
                 <div class="team-category">
                     <div class="team-category-title">Web Developer</div>
                     <div class="team-members-grid">
-                        <div class="team-member-box">podatekkk</div>
-                        <div class="team-member-box">XEN0NQ</div>
+                        <div class="team-member-box" style="grid-column: span 2;">podatekkk</div>
                     </div>
                 </div>
 
@@ -775,7 +932,7 @@
                     <div class="team-members-grid">
                         <div class="team-member-box">Scorpion</div>
                         <div class="team-member-box">t3xi_</div>
-                        <div class="team-member-box">Czarominus</div>
+                        <div class="team-member-box" style="grid-column: span 2;">Czarominus</div>
                     </div>
                 </div>
 
@@ -789,88 +946,138 @@
                 </div>
             </div>
         </section>
+
+        <!-- Stopka -->
+        <footer>
+            <p>&copy; 2026 ICECODE. Wszelkie prawa zastrzeżone.</p>
+        </footer>
     </div>
 
-    <!-- Podstrona: Skrypty (Pusta) -->
+    <!-- WIDOK 2: Panel Klienta (Logowanie przez Discord / Sklep paczek) -->
+    <div id="view-panel" class="site-view">
+        <nav>
+            <a onclick="switchView('home')" class="logo-area">
+                <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="logo-img">
+                <span class="logo-text">ICECODE</span>
+            </a>
+            <a onclick="switchView('home')" class="client-panel-btn">← Strona Główna</a>
+        </nav>
+
+        <div class="client-panel-container">
+            <div class="client-panel-left">
+                <h2>Wszystko, co kupiłeś,<br><span>w jednym miejscu.</span></h2>
+                <p>Zarządzaj swoimi paczkami, pobieraj pliki i sprawdzaj status dostępu - wszystko w jednym miejscu.</p>
+            </div>
+            <div class="client-panel-right">
+                <div class="discord-login-box">
+                    <div class="discord-icon-wrapper">
+                        <svg viewBox="0 0 127.14 96.36">
+                            <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.15c2.65-27.28-4.43-51.1-20.62-72.1M42.45,65.69C36.18,65.69,31,60,31,53s5.18-12.72,11.45-12.72S53.9,46,53.9,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.2,60,73.2,53s5.18-12.72,11.45-12.72S96.1,46,96.1,53,90.93,65.69,84.69,65.69Z"/>
+                        </svg>
+                    </div>
+                    <h3>Zaloguj się przez Discord</h3>
+                    <p>Po zalogowaniu zobaczysz paczki przypisane do Twojego konta Discord. Dostęp nadawany jest automatycznie po zakupie - rola pojawia się na naszym serwerze Discord.</p>
+                    
+                    <!-- Przycisk logowania Discord (podmień link href na swój autoryzacyjny OAuth2 Discorda) -->
+                    <a href="https://discord.gg/7WudMvsMg" target="_blank" class="btn-discord-login">
+                        <svg viewBox="0 0 127.14 96.36" width="18" height="18" fill="#ffffff"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.15c2.65-27.28-4.43-51.1-20.62-72.1M42.45,65.69C36.18,65.69,31,60,31,53s5.18-12.72,11.45-12.72S53.9,46,53.9,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.2,60,73.2,53s5.18-12.72,11.45-12.72S96.1,46,96.1,53,90.93,65.69,84.69,65.69Z"/></svg>
+                        Zaloguj przez Discord
+                    </a>
+
+                    <div class="panel-divider">ALBO</div>
+
+                    <!-- Przycisk przejścia do sklepu paczek -->
+                    <a href="https://discord.gg/7WudMvsMg" target="_blank" class="btn-shop-redirect">
+                        <span>Przejdź do sklepu paczek</span>
+                        <span>→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Podstrony uslug (Portfolio) -->
     <div id="subpage-skrypty" class="subpage-view">
         <button class="back-btn" onclick="closeSubpages()">
             <span>←</span> Powrót
         </button>
         <div class="subpage-box">
             <h2>Portfolio: Skrypty</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>IceCODE Team</span></span>
+            <span class="author-tag">Projekt stworzony przez: <span>ICECODE Team</span></span>
             <div class="empty-portfolio">
                 Tutaj wkrótce pojawią się realizacje.
             </div>
         </div>
     </div>
 
-    <!-- Podstrona: Pluginy (Pusta) -->
     <div id="subpage-pluginy" class="subpage-view">
         <button class="back-btn" onclick="closeSubpages()">
             <span>←</span> Powrót
         </button>
         <div class="subpage-box">
             <h2>Portfolio: Pluginy</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>IceCODE Team</span></span>
+            <span class="author-tag">Projekt stworzony przez: <span>ICECODE Team</span></span>
             <div class="empty-portfolio">
                 Tutaj wkrótce pojawią się realizacje.
             </div>
         </div>
     </div>
 
-    <!-- Podstrona: Grafiki (Pusta) -->
     <div id="subpage-grafiki" class="subpage-view">
         <button class="back-btn" onclick="closeSubpages()">
             <span>←</span> Powrót
         </button>
         <div class="subpage-box">
             <h2>Portfolio: Grafiki</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>IceCODE Team</span></span>
+            <span class="author-tag">Projekt stworzony przez: <span>ICECODE Team</span></span>
             <div class="empty-portfolio">
                 Tutaj wkrótce pojawią się realizacje.
             </div>
         </div>
     </div>
 
-    <!-- Podstrona: Boty Discord (Pusta) -->
     <div id="subpage-boty" class="subpage-view">
         <button class="back-btn" onclick="closeSubpages()">
             <span>←</span> Powrót
         </button>
         <div class="subpage-box">
             <h2>Portfolio: Boty Discord</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>IceCODE Team</span></span>
+            <span class="author-tag">Projekt stworzony przez: <span>ICECODE Team</span></span>
             <div class="empty-portfolio">
                 Tutaj wkrótce pojawią się realizacje.
             </div>
         </div>
     </div>
 
-    <!-- Podstrona: Strony WWW (Pusta) -->
     <div id="subpage-strony" class="subpage-view">
         <button class="back-btn" onclick="closeSubpages()">
             <span>←</span> Powrót
         </button>
         <div class="subpage-box">
             <h2>Portfolio: Strony WWW</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>IceCODE Team</span></span>
+            <span class="author-tag">Projekt stworzony przez: <span>ICECODE Team</span></span>
             <div class="empty-portfolio">
                 Tutaj wkrótce pojawią się realizacje.
             </div>
         </div>
     </div>
 
-    <!-- Stopka -->
-    <footer>
-        <p>&copy; 2026 IceCODE. Wszelkie prawa zastrzeżone.</p>
-        <p class="footer-made-by">This website was made by XEN0NQ</p>
-    </footer>
-
-    <!-- Skrypt -->
+    <!-- Skrypt obsługujący przełączanie widoków i podstron -->
     <script>
+        function switchView(viewName) {
+            document.querySelectorAll('.site-view').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.subpage-view').forEach(el => el.classList.remove('active'));
+            
+            if(viewName === 'home') {
+                document.getElementById('view-home').classList.add('active');
+            } else if(viewName === 'panel') {
+                document.getElementById('view-panel').classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function openSubpage(subpageName) {
-            document.getElementById('main-site-content').classList.add('hidden');
+            document.getElementById('view-home').classList.remove('active');
             document.querySelectorAll('.subpage-view').forEach(el => el.classList.remove('active'));
             document.getElementById('subpage-' + subpageName).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -878,7 +1085,7 @@
 
         function closeSubpages() {
             document.querySelectorAll('.subpage-view').forEach(el => el.classList.remove('active'));
-            document.getElementById('main-site-content').classList.remove('hidden');
+            document.getElementById('view-home').classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
