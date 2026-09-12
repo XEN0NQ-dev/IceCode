@@ -178,7 +178,6 @@
             box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
         }
 
-        /* Główny kontener strony */
         #main-wrapper {
             transition: opacity 0.3s ease;
         }
@@ -281,13 +280,12 @@
             align-items: center;
         }
 
+        /* Usunięte koło/ramka, zostaje samo logo z lekkim efektem świetlnym */
         .hero-image img {
-            width: 360px;
-            height: 360px;
-            object-fit: cover;
-            border-radius: 50%;
-            filter: drop-shadow(0 0 35px rgba(59, 182, 252, 0.4));
-            border: 4px solid rgba(59, 182, 252, 0.3);
+            width: 340px;
+            height: 340px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 25px rgba(59, 182, 252, 0.3));
             animation: float 4s ease-in-out infinite;
         }
 
@@ -296,7 +294,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Sekcja Usług / Map i Paczek */
+        /* Połączona sekcja: Nasze Oferty */
         .services-section {
             padding: 80px;
             max-width: 1400px;
@@ -374,7 +372,7 @@
             line-height: 1.5;
         }
 
-        /* Opinie przesuwające się w lewo */
+        /* Opinie przesuwające się w lewo (bez ognistych ikonek) */
         .testimonials-section {
             padding: 80px 0;
             overflow: hidden;
@@ -473,7 +471,7 @@
             font-weight: 500;
         }
 
-        /* Widok Regulaminów (ukryty domyślnie) */
+        /* Widok Regulaminów */
         #rules-wrapper {
             display: none;
             padding: 140px 80px 80px 80px;
@@ -614,6 +612,19 @@
             text-align: center;
             color: #666;
             font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-bottom .dev-credit {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .footer-bottom .dev-credit span {
+            color: #3bb6fc;
+            font-weight: 600;
         }
 
         @media (max-width: 968px) {
@@ -656,8 +667,7 @@
         </a>
         <ul class="nav-links">
             <li><a onclick="showMain(event)" class="active">Strona główna</a></li>
-            <li><a href="#uslugi">Oferta</a></li>
-            <li><a href="#mapy">Mapy i Paczki</a></li>
+            <li><a href="#oferty">Nasze Oferty</a></li>
             <li><a href="#opinie">Opinie</a></li>
             <li><a onclick="toggleRules(event)" style="color: #3bb6fc; font-weight: 700;">Regulaminy</a></li>
         </ul>
@@ -682,13 +692,13 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo 3D">
+                <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo">
             </div>
         </header>
 
-        <!-- Services Section (Oferta) -->
-        <section class="services-section" id="uslugi">
-            <h2 class="section-title">Nasza Oferta</h2>
+        <!-- Połączona sekcja: Nasze Oferty (Wszystko w jednej linii 3x2) -->
+        <section class="services-section" id="oferty">
+            <h2 class="section-title">Nasze Oferty</h2>
             <p class="section-subtitle">Sprawdź co możemy dla Ciebie wykonać</p>
             
             <div class="services-grid">
@@ -712,15 +722,7 @@
                     <h3>Grafika i Design</h3>
                     <p>Profesjonalne grafiki użytkowe, banery promocyjne, logotypy i oprawy wizualne.</p>
                 </div>
-            </div>
-        </section>
 
-        <!-- Osobna sekcja: Mapy i Paczki -->
-        <section class="services-section" id="mapy" style="padding-top: 0;">
-            <h2 class="section-title">Mapy i Paczki</h2>
-            <p class="section-subtitle">Gotowe rozwiązania serwerowe najwyższej jakości</p>
-            
-            <div class="services-grid">
                 <div class="service-card active-service">
                     <span class="service-badge badge-open">OTWARTE</span>
                     <i class="fa-solid fa-map"></i>
@@ -744,19 +746,18 @@
             </div>
         </section>
 
-        <!-- Testimonials Section (Karuzela opinii lecąca w lewo) -->
+        <!-- Testimonials Section (Karuzela bez ogni) -->
         <section class="testimonials-section" id="opinie">
             <h2 class="section-title" style="margin-bottom: 10px;">Zaufali Nam</h2>
             <p class="section-subtitle" style="margin-bottom: 40px;">Opinie zadowolonych klientów z naszego serwera Discord</p>
 
             <div class="testimonials-slider">
-                <!-- Zestaw opinii z przesłanych screenów (Zduplikowany dla idealnej ciągłości pętli) -->
                 <div class="testimonial-card">
                     <div>
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"IcEcOdE on top."</p>
                     </div>
-                    <div class="testimonial-author">Itzz_L4L1Vex66 <span>🔥 2</span></div>
+                    <div class="testimonial-author">Itzz_L4L1Vex66</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -764,7 +765,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Piękne grafiki 🤖"</p>
                     </div>
-                    <div class="testimonial-author">Grzesiek [DEV] <span>🔥 3</span></div>
+                    <div class="testimonial-author">Grzesiek [DEV]</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -772,7 +773,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"grafiki takie piekne ze tak sie oplacalo polecam"</p>
                     </div>
-                    <div class="testimonial-author">qvh <span>🔥 2</span></div>
+                    <div class="testimonial-author">qvh</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -780,7 +781,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Zarambisty skinek tak mi sie spodobal i innym ze 40 innych osob zaczelo go nosic naprawdę szacunek wojtek ❤️ zajebsity skinek i grafiki"</p>
                     </div>
-                    <div class="testimonial-author">!_chyba_szymek! <span>🔥 2</span></div>
+                    <div class="testimonial-author">!_chyba_szymek!</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -788,7 +789,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Szczerze powiem bez zamulania prosto z serca odkryłem tego typka... opinia jest jednoznaczna: KOGA KOSZTOWALO TYLE CO 1 LIZAK W SKLEPIE"</p>
                     </div>
-                    <div class="testimonial-author">Usunięty Użytkownik <span>🔥 1</span></div>
+                    <div class="testimonial-author">Usunięty Użytkownik</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -796,7 +797,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni 🏆"</p>
                     </div>
-                    <div class="testimonial-author">Chlebek [SUPPORT] <span>🔥 4</span></div>
+                    <div class="testimonial-author">Chlebek [SUPPORT]</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -804,7 +805,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"legit server zakupilem bota i strefę premium"</p>
                     </div>
-                    <div class="testimonial-author">szhakal_ <span>🔥 1</span></div>
+                    <div class="testimonial-author">szhakal_</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -812,7 +813,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"zajebistye embedy polecam"</p>
                     </div>
-                    <div class="testimonial-author">XENONQ <span>🔥 3</span></div>
+                    <div class="testimonial-author">XENONQ</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -820,7 +821,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Oczywiście premium i embed zajebista robota 🧊 on top"</p>
                     </div>
-                    <div class="testimonial-author">DEMONI <span>🔥 3</span></div>
+                    <div class="testimonial-author">DEMONI</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -828,7 +829,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Legit bot dc najlepszy jakiego widziałem"</p>
                     </div>
-                    <div class="testimonial-author">Blackweeed <span>🔥 5</span></div>
+                    <div class="testimonial-author">Blackweeed</div>
                 </div>
 
                 <!-- KOPIA DLA PŁYNNEJ PĘTLI -->
@@ -837,7 +838,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"IcEcOdE on top."</p>
                     </div>
-                    <div class="testimonial-author">Itzz_L4L1Vex66 <span>🔥 2</span></div>
+                    <div class="testimonial-author">Itzz_L4L1Vex66</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -845,7 +846,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Piękne grafiki 🤖"</p>
                     </div>
-                    <div class="testimonial-author">Grzesiek [DEV] <span>🔥 3</span></div>
+                    <div class="testimonial-author">Grzesiek [DEV]</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -853,7 +854,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"grafiki takie piekne ze tak sie oplacalo polecam"</p>
                     </div>
-                    <div class="testimonial-author">qvh <span>🔥 2</span></div>
+                    <div class="testimonial-author">qvh</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -861,7 +862,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Zarambisty skinek tak mi sie spodobal i innym ze 40 innych osob zaczelo go nosic naprawdę szacunek wojtek ❤️"</p>
                     </div>
-                    <div class="testimonial-author">!_chyba_szymek! <span>🔥 2</span></div>
+                    <div class="testimonial-author">!_chyba_szymek!</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -869,7 +870,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni 🏆"</p>
                     </div>
-                    <div class="testimonial-author">Chlebek [SUPPORT] <span>🔥 4</span></div>
+                    <div class="testimonial-author">Chlebek [SUPPORT]</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -877,7 +878,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"legit server zakupilem bota i strefę premium"</p>
                     </div>
-                    <div class="testimonial-author">szhakal_ <span>🔥 1</span></div>
+                    <div class="testimonial-author">szhakal_</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -885,7 +886,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"zajebistye embedy polecam"</p>
                     </div>
-                    <div class="testimonial-author">XENONQ <span>🔥 3</span></div>
+                    <div class="testimonial-author">XENONQ</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -893,7 +894,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Oczywiście premium i embed zajebista robota 🧊 on top"</p>
                     </div>
-                    <div class="testimonial-author">DEMONI <span>🔥 3</span></div>
+                    <div class="testimonial-author">DEMONI</div>
                 </div>
 
                 <div class="testimonial-card">
@@ -901,7 +902,7 @@
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="testimonial-text">"Legit bot dc najlepszy jakiego widziałem"</p>
                     </div>
-                    <div class="testimonial-author">Blackweeed <span>🔥 5</span></div>
+                    <div class="testimonial-author">Blackweeed</div>
                 </div>
             </div>
         </section>
@@ -925,7 +926,7 @@
         </section>
     </div>
 
-    <!-- WIDOK REGULAMINÓW (Zastępuje stronę główną po kliknięciu) -->
+    <!-- WIDOK REGULAMINÓW -->
     <div id="rules-wrapper">
         <div class="rules-top-action">
             <a href="#" onclick="showMain(event)" class="btn-primary"><i class="fa-solid fa-arrow-left"></i> Powrót na stronę główną</a>
@@ -1063,8 +1064,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 <h4>SZYBKIE LINKI</h4>
                 <ul>
                     <li><a onclick="showMain(event)">Strona główna</a></li>
-                    <li><a href="#uslugi">Oferta</a></li>
-                    <li><a href="#mapy">Mapy i Paczki</a></li>
+                    <li><a href="#oferty">Nasze Oferty</a></li>
                     <li><a href="#opinie">Opinie</a></li>
                 </ul>
             </div>
@@ -1084,7 +1084,8 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2026 ICECODE. Wszystkie prawa zastrzeżone.
+            <div>&copy; 2026 ICECODE. Wszystkie prawa zastrzeżone.</div>
+            <div class="dev-credit">This web was made by <span>XEN0NQ</span></div>
         </div>
     </footer>
 
