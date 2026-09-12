@@ -723,7 +723,7 @@
                 <p data-tr="hero_desc">Zaawansowane boty Discord, unikalne grafiki, strony WWW oraz profesjonalne wsparcie dla Twojego projektu!</p>
                 <div class="hero-buttons">
                     <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> <span data-tr="btn_discord">Dołącz na Discord</span></a>
-                    <a href="https://tipply.pl/@xW0JTI" target="_blank" class="btn-secondary"><i class="fas fa-hand-holding-dollar"></i> Tipply (CEO)</a>
+                    <a href="https://tipply.pl/@xW0JTI" target="_blank" class="btn-secondary"><i class="fas fa-hand-holding-dollar"></i> Tipply</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -1119,6 +1119,23 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
     </footer>
 
     <script>
+        // Blokada prawego przycisku myszy
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Blokada skrótów klawiszowych (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+                (e.ctrlKey && (e.key === 'U' || e.key === 'u'))
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
         const translations = {
             pl: {
                 loading: "Ładowanie zawartości...",
