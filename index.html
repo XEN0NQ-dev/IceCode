@@ -166,7 +166,7 @@
             gap: 15px;
         }
 
-        /* Przełącznik języków */
+        /* Przełącznik języków z flagami */
         .lang-switcher {
             display: flex;
             background: rgba(255, 255, 255, 0.05);
@@ -180,12 +180,15 @@
             background: transparent;
             border: none;
             color: #a0a0a0;
-            padding: 5px 10px;
+            padding: 5px 12px;
             border-radius: 15px;
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .lang-btn.active {
@@ -707,10 +710,10 @@
             <li><a onclick="toggleRules(event)" style="color: #3bb6fc; font-weight: 700;" data-tr="nav_rules">Regulaminy</a></li>
         </ul>
         <div class="nav-actions">
-            <!-- Przełącznik Języków -->
+            <!-- Przełącznik Języków z flagami -->
             <div class="lang-switcher">
-                <button class="lang-btn active" onclick="setLanguage('pl')">PL</button>
-                <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn active" onclick="setLanguage('pl')">PL 🇵🇱</button>
+                <button class="lang-btn" onclick="setLanguage('en')">EN 🇬🇧</button>
             </div>
             <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="discord-btn-nav" data-tr="nav_discord">Dołącz na Discord</a>
         </div>
