@@ -3,1069 +3,599 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICECODE - Profesjonalne projekty webowe, pluginy i boty</title>
-    
-    <link rel="icon" type="image/png" href="https://imgur.com/urSgbzj.png">
-    
-    <meta name="description" content="ICECODE - profesjonalne projekty webowe, pluginy, skrypty, boty Discord oraz grafiki.">
-    <meta name="keywords" content="icecode, pluginy, skrypty, boty discord, strony www, budowle, grafiki">
-    <meta name="author" content="ICECODE">
-
+    <title>ICECODE.PL - Usługi i Społeczność</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: #1f293d;
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            scroll-behavior: smooth;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: #080b12;
-            color: #ffffff;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.07) 0%, transparent 50%),
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
-            background-attachment: fixed;
         }
 
-        .site-view {
-            display: none;
-        }
-
-        .site-view.active {
-            display: block;
-        }
-
-        nav {
+        /* Top Bar z regulaminem */
+        .top-bar {
+            background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+            color: white;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 85%;
-            max-width: 1200px;
-            margin: 20px auto 40px auto;
-            background: rgba(12, 17, 28, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            padding: 12px 30px;
-            border-radius: 50px;
+            font-weight: 600;
             position: sticky;
-            top: 20px;
+            top: 0;
             z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .logo-img {
-            height: 38px;
-            width: auto;
-            border-radius: 50%;
-        }
-
-        .logo-text {
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: #38bdf8;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #94a3b8;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-links a:hover {
-            color: #38bdf8;
-        }
-
-        .client-panel-btn {
-            background: transparent;
-            border: 1px solid #38bdf8;
-            color: #38bdf8;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .client-panel-btn:hover {
-            background: #38bdf8;
-            color: #080b12;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
-        }
-
-        .hero {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 85%;
-            max-width: 1200px;
-            margin: 60px auto 140px auto;
-            min-height: 85vh;
-        }
-
-        .hero-text {
-            max-width: 550px;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            color: #ffffff;
-            line-height: 1.1;
-        }
-
-        .hero-text h1 span {
-            color: #38bdf8;
-            text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-        }
-
-        .hero-text p {
-            font-size: 1.1rem;
-            color: #94a3b8;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn-primary {
-            background: #38bdf8;
-            color: #080b12;
-            border: none;
-            padding: 12px 25px;
+        .rules-toggle-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 6px 16px;
             border-radius: 8px;
-            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.3s;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-size: 1rem;
-            text-decoration: none;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .hero-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: float 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.4));
-        }
-
-        .hero-image img {
-            max-width: 340px;
-            width: 100%;
-            height: auto;
-            border-radius: 20px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .stat-card {
-            background: rgba(14, 20, 33, 0.75);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            padding: 40px 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: #38bdf8;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #38bdf8;
-            margin-bottom: 10px;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            color: #94a3b8;
             font-weight: 600;
+            transition: background 0.2s;
         }
 
-        section {
-            width: 85%;
+        .rules-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Główny kontener */
+        .main-container {
             max-width: 1200px;
-            margin: 140px auto;
+            margin: 0 auto;
+            padding: 40px 20px;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 2.4rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .section-title p {
-            color: #94a3b8;
-            font-size: 1.1rem;
-        }
-
-        .offers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-        }
-
-        .offer-card {
-            background: rgba(14, 20, 33, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(56, 189, 248, 0.15);
-            padding: 35px 20px;
-            border-radius: 16px;
-            text-align: center;
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .offer-card:hover {
-            transform: translateY(-5px);
-            border-color: #38bdf8;
-            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15);
-        }
-
-        .offer-card h3 {
-            color: #ffffff;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .subpage-view {
+        /* Widok regulaminu (ukryty domyślnie) */
+        #rules-view {
             display: none;
-            width: 85%;
-            max-width: 1200px;
-            margin: 40px auto;
-            animation: fadeIn 0.4s ease;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        .subpage-view.active {
-            display: block;
+        .rules-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
         .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(14, 20, 33, 0.85);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: #38bdf8;
+            background: var(--accent);
+            color: white;
+            border: none;
             padding: 10px 20px;
-            border-radius: 30px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
-            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
         }
 
         .back-btn:hover {
-            background: #38bdf8;
-            color: #080b12;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            background: var(--accent-hover);
         }
 
-        .back-btn span {
-            font-size: 1.2rem;
-            line-height: 1;
-            transition: transform 0.2s ease;
-        }
-
-        .back-btn:hover span {
-            transform: translateX(-4px);
-        }
-
-        .subpage-box {
-            background: rgba(14, 20, 33, 0.8);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 20px;
-            padding: 40px;
-        }
-
-        .subpage-box h2 {
-            font-size: 2rem;
-            color: #38bdf8;
-            margin-bottom: 5px;
-        }
-
-        .author-tag {
-            color: #94a3b8;
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-            display: block;
-        }
-
-        .author-tag span {
-            color: #38bdf8;
-            font-weight: 600;
-        }
-
-        .empty-portfolio {
-            text-align: center;
-            color: #94a3b8;
-            font-style: italic;
-            padding: 40px;
-            font-size: 1.1rem;
-        }
-        
-        .graphics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .graphic-item {
-            background: rgba(8, 11, 18, 0.6);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .graphic-item:hover {
-            transform: translateY(-5px);
-            border-color: #38bdf8;
-            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.25);
-        }
-
-        .graphic-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-        }
-
-        .client-panel-container {
-            width: 85%;
-            max-width: 1100px;
-            margin: 60px auto;
-            background: rgba(12, 17, 28, 0.9);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 24px;
-            padding: 50px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            animation: fadeIn 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .client-panel-header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .client-panel-header h2 {
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .client-panel-header h2 span {
-            color: #38bdf8;
-        }
-
-        .client-panel-header p {
-            color: #94a3b8;
-            font-size: 1rem;
-        }
-
-        .auth-options {
+        .rules-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            width: 100%;
-            max-width: 850px;
         }
 
-        @media(max-width: 768px) {
-            .auth-options {
+        @media(max-width: 900px) {
+            .rules-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        .auth-card {
-            background: rgba(8, 11, 18, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .rules-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            max-height: 70vh;
+            overflow-y: auto;
         }
 
-        .auth-card h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
+        .rules-card h2 {
+            color: var(--accent);
             margin-bottom: 20px;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.5rem;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-
-        .form-control {
-            width: 100%;
-            background: rgba(14, 20, 33, 0.9);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            padding: 12px 15px;
-            border-radius: 10px;
-            color: #ffffff;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: #38bdf8;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: #38bdf8;
-            color: #080b12;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-
-        .btn-submit:hover {
-            background: #0ea5e9;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
-        }
-
-        .btn-discord-login {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            background: #5865F2;
-            color: #ffffff;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
-            text-decoration: none;
-            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
-            margin-top: 15px;
-        }
-
-        .btn-discord-login:hover {
-            background: #4752c4;
-            transform: translateY(-2px);
-        }
-
-        .discord-info-text {
-            color: #94a3b8;
-            font-size: 0.88rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .reviews-container {
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        }
-
-        .reviews-track {
-            display: flex;
-            gap: 25px;
-            width: max-content;
-            animation: scrollReviews 35s linear infinite;
-        }
-
-        .reviews-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scrollReviews {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .review-card {
-            background: rgba(14, 20, 33, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(56, 189, 248, 0.15);
-            padding: 35px;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 380px;
-            flex-shrink: 0;
-        }
-
-        .review-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .review-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(56, 189, 248, 0.4);
-            background: rgba(56, 189, 248, 0.1);
-            padding: 5px;
-        }
-
-        .review-author-info h4 {
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .review-author-info span {
-            color: #38bdf8;
-            font-size: 0.85rem;
-        }
-
-        .review-card p {
-            color: #94a3b8;
+        .rules-card pre {
+            white-space: pre-wrap;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-muted);
             font-size: 0.95rem;
             line-height: 1.6;
         }
 
-        .team-container {
+        /* Nagłówek strony głównej */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo-container {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Przyciski społecznościowe / linki */
+        .socials {
             display: flex;
-            flex-direction: column;
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .team-category {
-            background: rgba(14, 20, 33, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(56, 189, 248, 0.15);
-            padding: 25px;
-            border-radius: 16px;
-        }
-
-        .team-category-title {
-            color: #38bdf8;
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-            padding-bottom: 10px;
-        }
-
-        .team-members-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            justify-content: center;
             gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
         }
 
-        .team-member-box {
-            background: rgba(20, 28, 45, 0.8);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            padding: 15px 20px;
-            border-radius: 10px;
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .social-btn:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        .social-btn.discord { color: #5865F2; }
+        .social-btn.youtube { color: #FF0000; }
+        .social-btn.tipply { color: #10b981; }
+
+        /* Statystyki */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 16px;
             text-align: center;
-            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Sekcja Map i Paczek (Osobno) */
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--accent);
+        }
+
+        .maps-packs-section {
+            margin-bottom: 60px;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .item-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+        }
+
+        .item-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* Karuzela opinii lecących w lewo */
+        .reviews-section {
+            margin-bottom: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .reviews-slider {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+            animation: scrollLeft 35s linear infinite;
+        }
+
+        .reviews-slider:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollLeft {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .review-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 14px;
+            width: 320px;
+            flex-shrink: 0;
+        }
+
+        .review-author {
             font-weight: 600;
             font-size: 0.95rem;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .team-member-box:hover {
-            transform: translateY(-3px);
-            border-color: #38bdf8;
-        }
-
-        .team-members-grid .team-member-box:only-child {
-            grid-column: span 2;
-        }
-
-        footer {
-            text-align: center;
-            padding: 50px 0;
-            color: #94a3b8;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            margin-top: 140px;
-            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: var(--accent);
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            justify-content: space-between;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .review-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
     </style>
 </head>
 <body>
 
-    <div id="view-home" class="site-view active">
-        <nav>
-            <a onclick="switchView('home')" class="logo-area">
-                <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="logo-img">
-                <span class="logo-text">ICECODE</span>
+    <!-- Górny pasek z przełącznikiem regulaminu -->
+    <div class="top-bar">
+        <span>📜 Zapoznaj się z regulaminami serwera i płatności ICECODE</span>
+        <button class="rules-toggle-btn" id="toggleRulesBtn" onclick="toggleRules()">Regulaminy</button>
+    </div>
+
+    <!-- GŁÓWNA STRONA -->
+    <div class="main-container" id="mainView">
+        <header>
+            <div class="logo-container">
+                <img src="https://i.imgur.com/6ugLZay.png" alt="ICECODE Logo">
+            </div>
+            <h1>ICECODE</h1>
+            <p class="subtitle">Profesjonalne usługi, boty, grafiki i społeczność</p>
+        </header>
+
+        <!-- Przyciski społecznościowe / Linki -->
+        <div class="socials">
+            <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="social-btn discord">
+                <i class="fab fa-discord"></i> Discord Server
             </a>
-            <ul class="nav-links">
-                <li><a onclick="switchView('home')">Strona Główna</a></li>
-                <li><a href="#statystyki">Statystyki</a></li>
-                <li><a href="#oferty">Usługi</a></li>
-                <li><a href="#opinie">Opinie</a></li>
-                <li><a href="#zespol">Zespół</a></li>
-            </ul>
-            <a onclick="switchView('panel')" class="client-panel-btn">Panel Klienta</a>
-        </nav>
-
-        <section class="hero">
-            <div class="hero-text">
-                <h1><span>ICECODE</span><br>Profesjonalne projekty webowe!</h1>
-                <p>Zaufaj nam i stwórz z nami nowoczesne aplikacje oraz strony internetowe dopasowane do Twoich potrzeb.</p>
-                <div class="hero-buttons">
-                    <a onclick="switchView('panel')" class="btn-primary">Złóż zamówienie</a>
-                    <a href="#oferty" class="btn-secondary">Zobacz ofertę</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Duże Logo">
-            </div>
-        </section>
-
-        <section id="statystyki">
-            <div class="section-title">
-                <h2>Statystyki</h2>
-                <p>Zobacz, jak rozwijamy nasz projekt</p>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Odwiedziny</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">50</div>
-                    <div class="stat-label">Legitchecki</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="oferty">
-            <div class="section-title">
-                <h2>Usługi</h2>
-                <p>Wybierz interesującą Cię usługę</p>
-            </div>
-            <div class="offers-grid">
-                <div class="offer-card" onclick="openSubpage('skrypty')"><h3>Skrypty</h3></div>
-                <div class="offer-card" onclick="openSubpage('pluginy')"><h3>Pluginy</h3></div>
-                <div class="offer-card" onclick="openSubpage('grafiki')"><h3>Grafiki</h3></div>
-                <div class="offer-card" onclick="openSubpage('boty')"><h3>Boty Discord</h3></div>
-                <div class="offer-card" onclick="openSubpage('strony')"><h3>Strony WWW</h3></div>
-            </div>
-        </section>
-
-        <section id="opinie">
-            <div class="section-title">
-                <h2>Opinie</h2>
-                <p>Co myślą o nas nasi klienci?</p>
-            </div>
-            <div class="reviews-container">
-                <div class="reviews-track">
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
-                            <div class="review-author-info">
-                                <h4>Klient ICECODE</h4>
-                                <span>Zweryfikowany Klient</span>
-                            </div>
-                        </div>
-                        <p>“Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni”</p>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
-                            <div class="review-author-info">
-                                <h4>Klient ICECODE</h4>
-                                <span>Zweryfikowany Klient</span>
-                            </div>
-                        </div>
-                        <p>“Witam to znow ja Kupiłem Na ice code Bota Na discord Rekrutacja,ticket,weryfikacja <br>Propsy dla icecode”</p>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
-                            <div class="review-author-info">
-                                <h4>Klient ICECODE</h4>
-                                <span>Zweryfikowany Klient</span>
-                            </div>
-                        </div>
-                        <p>“Szczerze powiem bez zamulania prosto z serca odkryłem tego typka z jakiegoś ticketa na serwerze gdzie jestem w administracji napisałem na pv o logo na mój serwer i opinia jest jednoznaczna : KUR NIE ZNAHDZIECIE TAK ZAJEBISTEGO I ZA TAKA CENE LOGO TO KOGO KOSZTOWALO TYLE CO 1 LIZAK W SKLEPIE”</p>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
-                            <div class="review-author-info">
-                                <h4>Klient ICECODE</h4>
-                                <span>Zweryfikowany Klient</span>
-                            </div>
-                        </div>
-                        <p>“MOJA SZCZERA OPINIA NA TEMAT SERWERA ICECODE<br>ICECODE To najlepszy Discord z informacjami i innymi Od kiedy Zakupiłem Strefę Premium Mam Dostęp Do rzeczy które wspomagają mi w budowie Swojego Serwer Również Do Montażu”</p>
-                    </div>
-
-                    <!-- Duplikat dla płynnej pętli -->
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
-                            <div class="review-author-info">
-                                <h4>Klient ICECODE</h4>
-                                <span>Zweryfikowany Klient</span>
-                            </div>
-                        </div>
-                        <p>“Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni”</p>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
-                            <div class="review-author-info">
-                                <h4>Klient ICECODE</h4>
-                                <span>Zweryfikowany Klient</span>
-                            </div>
-                        </div>
-                        <p>“Witam to znow ja Kupiłem Na ice code Bota Na discord Rekrutacja,ticket,weryfikacja <br>Propsy dla icecode”</p>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
-                            <div class="review-author-info">
-                                <h4>Klient ICECODE</h4>
-                                <span>Zweryfikowany Klient</span>
-                            </div>
-                        </div>
-                        <p>“Szczerze powiem bez zamulania prosto z serca odkryłem tego typka z jakiegoś ticketa na serwerze gdzie jestem w administracji napisałem na pv o logo na mój serwer i opinia jest jednoznaczna : KUR NIE ZNAHDZIECIE TAK ZAJEBISTEGO I ZA TAKA CENE LOGO TO KOGO KOSZTOWALO TYLE CO 1 LIZAK W SKLEPIE”</p>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="review-avatar">
-                            <div class="review-author-info">
-                                <h4>Klient ICECODE</h4>
-                                <span>Zweryfikowany Klient</span>
-                            </div>
-                        </div>
-                        <p>“MOJA SZCZERA OPINIA NA TEMAT SERWERA ICECODE<br>ICECODE To najlepszy Discord z informacjami i innymi Od kiedy Zakupiłem Strefę Premium Mam Dostęp Do rzeczy które wspomagają mi w budowie Swojego Serwer Również Do Montażu”</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="zespol">
-            <div class="section-title">
-                <h2>Zespół</h2>
-                <p>Ludzie odpowiedzialni za projekt</p>
-            </div>
-            <div class="team-container">
-                <div class="team-category">
-                    <div class="team-category-title">CEO</div>
-                    <div class="team-members-grid">
-                        <div class="team-member-box">⌈ᴄᴇᴏ⌋ ▪ 𝚡𝚆𝚘𝚓𝚝𝚒</div>
-                    </div>
-                </div>
-                <div class="team-category">
-                    <div class="team-category-title">Official Dev</div>
-                    <div class="team-members-grid">
-                        <div class="team-member-box">xKamix</div>
-                        <div class="team-member-box">Grzesiek</div>
-                    </div>
-                </div>
-                <div class="team-category">
-                    <div class="team-category-title">Manager</div>
-                    <div class="team-members-grid">
-                        <div class="team-member-box">Ricki2Wrony</div>
-                    </div>
-                </div>
-                <div class="team-category">
-                    <div class="team-category-title">Montażysta</div>
-                    <div class="team-members-grid">
-                        <div class="team-member-box">n9cx</div>
-                    </div>
-                </div>
-                <div class="team-category">
-                    <div class="team-category-title">Budowniczy</div>
-                    <div class="team-members-grid">
-                        <div class="team-member-box">Siabadaba</div>
-                        <div class="team-member-box">Kira</div>
-                    </div>
-                </div>
-                <div class="team-category">
-                    <div class="team-category-title">Web Developer</div>
-                    <div class="team-members-grid">
-                        <div class="team-member-box" style="grid-column: span 2;">podatekkk</div>
-                    </div>
-                </div>
-                <div class="team-category">
-                    <div class="team-category-title">Bot Developer</div>
-                    <div class="team-members-grid">
-                        <div class="team-member-box">Baxi_1 [URLOP]</div>
-                        <div class="team-member-box">Kryki Dev</div>
-                    </div>
-                </div>
-                <div class="team-category">
-                    <div class="team-category-title">Model Maker</div>
-                    <div class="team-members-grid">
-                        <div class="team-member-box">Nerux</div>
-                    </div>
-                </div>
-                <div class="team-category">
-                    <div class="team-category-title">Skript Maker</div>
-                    <div class="team-members-grid">
-                        <div class="team-member-box">Scorpion</div>
-                        <div class="team-member-box">t3xi_</div>
-                        <div class="team-member-box" style="grid-column: span 2;">Czarominus</div>
-                    </div>
-                </div>
-                <div class="team-category">
-                    <div class="team-category-title">Premium Creator</div>
-                    <div class="team-members-grid">
-                        <div class="team-member-box">K0mandos</div>
-                        <div class="team-member-box">Timi</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>&copy; 2026 ICECODE. Wszelkie prawa zastrzeżone.</p>
-        </footer>
-    </div>
-
-    <div id="view-panel" class="site-view">
-        <nav>
-            <a onclick="switchView('home')" class="logo-area">
-                <img src="https://imgur.com/urSgbzj.png" alt="ICECODE Logo" class="logo-img">
-                <span class="logo-text">ICECODE</span>
+            <a href="https://youtube.com/@icecode-pl?si=96Rfsyn89vLCCB-1" target="_blank" class="social-btn youtube">
+                <i class="fab fa-youtube"></i> YouTube Channel
             </a>
-            <a onclick="switchView('home')" class="client-panel-btn">← Strona Główna</a>
-        </nav>
+            <a href="https://tipply.pl/@xW0JTI" target="_blank" class="social-btn tipply">
+                <i class="fas fa-hand-holding-dollar"></i> Tipply (CEO)
+            </a>
+        </div>
 
-        <div class="client-panel-container">
-            <div class="client-panel-header">
-                <h2>Panel Klienta <span>ICECODE</span></h2>
-                <p>Zaloguj się, aby zarządzać swoimi zakupami i pobierać pliki.</p>
+        <!-- Statystyki -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">55+</div>
+                <div class="stat-label">Legitchecków</div>
             </div>
-
-            <div class="auth-options">
-                <div class="auth-card">
-                    <h3>Tradycyjne logowanie</h3>
-                    <form onsubmit="event.preventDefault(); alert('System logowania jest w trakcie konfiguracji przez administratora.');">
-                        <div class="form-group">
-                            <label>Adres E-mail / Login</label>
-                            <input type="text" class="form-control" placeholder="Wpisz e-mail" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Hasło</label>
-                            <input type="password" class="form-control" placeholder="••••••••" required>
-                        </div>
-                        <button type="submit" class="btn-submit">Zaloguj się</button>
-                    </form>
-                </div>
-
-                <div class="auth-card">
-                    <h3>
-                        <svg viewBox="0 0 127.14 96.36" width="22" height="22" fill="#5865F2"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.15c2.65-27.28-4.43-51.1-20.62-72.1M42.45,65.69C36.18,65.69,31,60,31,53s5.18-12.72,11.45-12.72S53.9,46,53.9,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.2,60,73.2,53s5.18-12.72,11.45-12.72S96.1,46,96.1,53,90.93,65.69,84.69,65.69Z"/></svg>
-                        Logowanie przez Discord
-                    </h3>
-                    <p class="discord-info-text">Po zalogowaniu system automatycznie rozpozna Twoje konto i przypisane zakupy oraz role z serwera Discord.</p>
-                    
-                    <a href="#" onclick="alert('Link autoryzacyjny Discord oczekuje na podanie przez CEO.'); return false;" class="btn-discord-login">
-                        <svg viewBox="0 0 127.14 96.36" width="18" height="18" fill="#ffffff"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.15c2.65-27.28-4.43-51.1-20.62-72.1M42.45,65.69C36.18,65.69,31,60,31,53s5.18-12.72,11.45-12.72S53.9,46,53.9,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.2,60,73.2,53s5.18-12.72,11.45-12.72S96.1,46,96.1,53,90.93,65.69,84.69,65.69Z"/></svg>
-                        Autoryzuj przez Discord
-                    </a>
-                </div>
+            <div class="stat-card">
+                <div class="stat-number">300+</div>
+                <div class="stat-label">Osób na Discordzie</div>
             </div>
         </div>
-    </div>
 
-    <div id="subpage-skrypty" class="subpage-view">
-        <button class="back-btn" onclick="closeSubpages()"><span>←</span> Powrót</button>
-        <div class="subpage-box">
-            <h2>Portfolio: Skrypty</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>ICECODE Team</span></span>
-            <div class="empty-portfolio">Tutaj wkrótce pojawią się realizacje.</div>
-        </div>
-    </div>
-
-    <div id="subpage-pluginy" class="subpage-view">
-        <button class="back-btn" onclick="closeSubpages()"><span>←</span> Powrót</button>
-        <div class="subpage-box">
-            <h2>Portfolio: Pluginy</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>ICECODE Team</span></span>
-            <div class="empty-portfolio">Tutaj wkrótce pojawią się realizacje.</div>
-        </div>
-    </div>
-
-    <div id="subpage-grafiki" class="subpage-view">
-        <button class="back-btn" onclick="closeSubpages()"><span>←</span> Powrót</button>
-        <div class="subpage-box">
-            <h2>Portfolio: Grafiki</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>⌈ᴄᴇᴏ⌋ ▪ 𝚡𝚆𝚘𝚓𝚝𝚒</span></span>
-            
-            <div class="graphics-grid">
-                <div class="graphic-item">
-                    <img src="https://imgur.com/7GbVwxB.png" alt="Grafika ICECODE 1">
+        <!-- Osobna sekcja: Mapy i Paczki -->
+        <div class="maps-packs-section">
+            <h2 class="section-title"><i class="fas fa-box-archive"></i> Mapy i Paczki</h2>
+            <div class="items-grid">
+                <div class="item-card">
+                    <h3>Autorskie Mapy Minecraft</h3>
+                    <p>Profesjonalnie przygotowane mapy pod serwery typu EasyHC, Survival oraz minigry.</p>
+                    <span style="color: var(--accent); font-weight: 600; font-size: 0.9rem;">Sprawdź na DC &rarr;</span>
                 </div>
-                <div class="graphic-item">
-                    <img src="https://imgur.com/opnw7Ku.png" alt="Grafika ICECODE 2">
+                <div class="item-card">
+                    <h3>Paczki Zasobów / Skiny</h3>
+                    <p>Dopracowane paczki tekstur, ikon oraz unikalne skiny dostosowane pod Twoje wymagania.</p>
+                    <span style="color: var(--accent); font-weight: 600; font-size: 0.9rem;">Sprawdź na DC &rarr;</span>
                 </div>
-                <div class="graphic-item">
-                    <img src="https://imgur.com/2CiTkRn.png" alt="Grafika ICECODE 3">
-                </div>
-                <div class="graphic-item">
-                    <img src="https://imgur.com/8dUYxbs.png" alt="Grafika ICECODE 4">
-                </div>
-                <div class="graphic-item">
-                    <img src="https://imgur.com/29Vp29w.png" alt="Grafika ICECODE 5">
+                <div class="item-card">
+                    <h3>Konfiguracje / Pluginy</h3>
+                    <p>Gotowe setupy trybów oraz autorskie skrypty i pluginy zwiększające wydajność serwera.</p>
+                    <span style="color: var(--accent); font-weight: 600; font-size: 0.9rem;">Sprawdź na DC &rarr;</span>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="subpage-boty" class="subpage-view">
-        <button class="back-btn" onclick="closeSubpages()"><span>←</span> Powrót</button>
-        <div class="subpage-box">
-            <h2>Portfolio: Boty Discord</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>ICECODE Team</span></span>
-            <div class="empty-portfolio">Tutaj wkrótce pojawią się realizacje.</div>
+        <!-- Opinie lecące w lewo -->
+        <div class="reviews-section">
+            <h2 class="section-title" style="margin-bottom: 20px;"><i class="fas fa-star"></i> Opinie klientów</h2>
+            <div class="reviews-slider" id="reviewsSlider">
+                <!-- Zestaw opinii z Twoich screenów -->
+                <div class="review-card">
+                    <div class="review-author">Itzz_L4L1Vex66 <span>🔥 2</span></div>
+                    <div class="review-text">IcEcOdE on top. Zajebistka strefa premium!</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-author">Grzesiek [DEV] <span>🔥 3</span></div>
+                    <div class="review-text">Piękne grafiki 🤖</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-author">qvh <span>🔥 2</span></div>
+                    <div class="review-text">Dali mi za darmo to sie ciesze ;3 Grafiki takie piekne ze tak sie oplacalo, polecam.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-author">!_chyba_szymek! <span>🔥 2</span></div>
+                    <div class="review-text">Zarambisty skinek, tak mi sie spodobal i innym ze 40 innych osob zaczelo go nosic. Szacunek!</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-author">Chlebek [SUPPORT] <span>🔥 4</span></div>
+                    <div class="review-text">Legit Serwer! Idealny najlepszy Code. Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni 🏆</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-author">szhakal_ <span>🔥 1</span></div>
+                    <div class="review-text">legit server zakupilem bota i strefę premium.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-author">XENONQ <span>🔥 3</span></div>
+                    <div class="review-text">zajebistye embedy polecam.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-author">Marchewkav2 <span>🔥 2</span></div>
+                    <div class="review-text">legit serwer .. najlepszy code.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-author">DEMONI <span>🔥 3</span></div>
+                    <div class="review-text">Oczywiście premium i embed zajebista robota 🧊 on top.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-author">Blackweeed <span>🔥 5</span></div>
+                    <div class="review-text">Legit bot dc najlepszy jakiego widziałem.</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="subpage-strony" class="subpage-view">
-        <button class="back-btn" onclick="closeSubpages()"><span>←</span> Powrót</button>
-        <div class="subpage-box">
-            <h2>Portfolio: Strony WWW</h2>
-            <span class="author-tag">Projekt stworzony przez: <span>ICECODE Team</span></span>
-            <div class="empty-portfolio">Tutaj wkrótce pojawią się realizacje.</div>
+    <!-- WIDOK REGULAMINÓW (Ukryty domyślnie, pojawia się po kliknięciu) -->
+    <div id="rules-view">
+        <div class="rules-header">
+            <button class="back-btn" onclick="toggleRules()"><i class="fas fa-arrow-left"></i> Powrót</button>
+        </div>
+        <div class="rules-grid">
+            <!-- Regulamin Serwera -->
+            <div class="rules-card">
+                <h2>Regulamin Serwera Discord</h2>
+                <pre>ICECODE - Regulamin Serwera Discord
+Nieznajomość regulaminu nie zwalnia z obowiązku jego przestrzegania. Dołączając do serwera Discord ICECODE.PL, automatycznie akceptujesz wszystkie poniższe zasady.
+
+§1. Kultura i szacunek
+- Zachowuj kulturę wypowiedzi wobec wszystkich użytkowników.
+- Ogranicz używanie wulgaryzmów do minimum.
+- Obrażanie, wyzywanie, prowokowanie oraz poniżanie innych osób jest zabronione.
+
+§2. Reklama
+- Zabrania się reklamowania innych serwerów Discord, stron internetowych, mediów społecznościowych, usług oraz projektów bez zgody administracji.
+- Naruszenie tego punktu może skutkować natychmiastową karą.
+
+§3. Dane osobowe i prywatność
+- Udostępnianie danych osobowych innych osób bez ich zgody jest zabronione.
+- Publikowanie prywatnych rozmów, zdjęć lub innych poufnych informacji również podlega karze.
+
+§4. Podszywanie się
+- Zabrania się podszywania pod innych użytkowników, członków administracji lub osoby publiczne.
+- Dotyczy to również używania mylących nazw, avatarów lub opisów profilu.
+
+§5. Niebezpieczne treści
+- Zakazane jest wysyłanie podejrzanych linków, plików, programów oraz innych treści mogących stanowić zagrożenie dla użytkowników.
+- Każda próba rozpowszechniania szkodliwego oprogramowania będzie surowo karana.
+
+§6. Tickety
+- Tworzenie pustych ticketów jest zabronione.
+- Tickety powinny być tworzone wyłącznie w uzasadnionych sprawach związanych z serwerem.
+- Nadużywanie systemu ticketów może skutkować blokadą dostępu do tej funkcji lub innymi karami.
+
+§7. Nadmierne pingowanie
+- Nie oznaczaj wielokrotnie tych samych użytkowników ani członków administracji.
+- Pamiętaj, że każdy użytkownik ma prawo do prywatności i czasu na odpowiedź.
+
+§8. Własność intelektualna
+- Kradzież, kopiowanie lub rozpowszechnianie materiałów należących do serwera bez zgody właściciela jest zabronione.
+- Dotyczy to między innymi kodu źródłowego, grafik, konfiguracji oraz innych zasobów.
+
+§9. Treści NSFW
+- Publikowanie treści NSFW jest całkowicie zabronione.
+- Zakaz obejmuje obrazy, filmy, gify, wiadomości tekstowe oraz linki prowadzące do takich materiałów.
+
+§10. Spam i flood
+- Spamowanie wiadomościami, emoji, linkami lub innymi treściami jest zabronione.
+- Wysyłanie zaproszeń do innych serwerów bez zgody administracji również traktowane jest jako spam.
+
+§11. Zasady Discord
+- Każdy użytkownik jest zobowiązany do przestrzegania aktualnych zasad Discord Terms of Service oraz Community Guidelines.
+- Łamanie regulaminu Discorda może skutkować dodatkowymi konsekwencjami na serwerze.
+
+§12. Uprawnienia administracji
+- Administracja ma prawo do nałożenia kary na użytkownika, jeśli jego zachowanie zostanie uznane za szkodliwe dla społeczności.
+- W szczególnych przypadkach administracja może nie ujawniać pełnych szczegółów swojej decyzji.
+- Administracja nie ponosi odpowiedzialności za transakcje, wymiany ani oszustwa dokonywane pomiędzy użytkownikami.
+
+§13. Postanowienia końcowe
+- Regulamin może zostać zmieniony w dowolnym momencie bez wcześniejszego powiadomienia użytkowników.
+- Korzystanie z serwera po wprowadzeniu zmian oznacza ich akceptację.
+- W sprawach nieuregulowanych niniejszym regulaminem decyzję podejmuje administracja serwera.</pre>
+            </div>
+
+            <!-- Regulamin Płatności -->
+            <div class="rules-card">
+                <h2>Regulamin Płatności</h2>
+                <pre>ICECODE - Regulamin Płatności
+Brak znajomości niniejszego regulaminu nie zwalnia z obowiązku jego przestrzegania. Korzystając z usług ICECODE oraz składając zamówienie, klient potwierdza zapoznanie się z jego treścią i akceptuje wszystkie zawarte w nim postanowienia.
+
+§1. Zwroty i odstąpienie od umowy
+- Złożenie zamówienia oznacza akceptację warunków realizacji usługi.
+- Klient wyraża zgodę na rozpoczęcie realizacji zamówienia przed upływem terminu odstąpienia od umowy.
+- Po rozpoczęciu prac nad projektem zwrot środków nie przysługuje, chyba że strony ustalą inaczej.
+
+§2. Termin realizacji
+- Czas realizacji zależy od rodzaju projektu, jego stopnia skomplikowania oraz aktualnej dostępności wykonawcy.
+- Standardowy termin realizacji wynosi od 7 do 14 dni roboczych.
+- W szczególnych przypadkach termin ten może ulec wydłużeniu, o czym klient zostanie poinformowany.
+
+§3. Przechowywanie projektów
+- Gotowe projekty przechowywane są przez okres do 30 dni od daty zakończenia realizacji.
+- Po upływie wskazanego terminu wykonawca zastrzega sobie prawo do trwałego usunięcia plików bez wcześniejszego powiadomienia klienta.
+
+§4. Zaliczki
+- Przy większych lub bardziej czasochłonnych zleceniach wykonawca może wymagać wpłaty zaliczki.
+- Standardowa wysokość zaliczki wynosi 50% wartości zamówienia, jednak ostateczna kwota ustalana jest indywidualnie.
+
+§5. Naruszenie regulaminu
+- W przypadku naruszenia regulaminu serwera lub zasad współpracy przez klienta, skutkującego m.in. blokadą dostępu do serwera, wykonawca ma prawo zakończyć realizację zlecenia.
+- W takiej sytuacji klientowi nie przysługuje zwrot wpłaconych środków.
+
+§6. Poprawki
+- Drobne poprawki zgłoszone bezpośrednio po zakończeniu projektu mogą zostać wykonane bez dodatkowych opłat.
+- Po upływie 30 dni od zakończenia realizacji wszelkie poprawki, aktualizacje lub modyfikacje są traktowane jako usługa dodatková i mogą podlegać opłacie.
+
+§7. Rozwiązywanie sporów
+- Wykonawca nie jest zobowiązany do uczestnictwa w pozasądowych procedurach rozwiązywania sporów konsumenckich (ADR/ODR), chyba że wymagają tego obowiązujące przepisy prawa.
+
+§8. Płatności
+- Płatność za usługę stanowi wynagrodzenie za wykonanie zamówionego projektu.
+- Realizacja projektu rozpoczyna się po zaksięgowaniu ustalonej kwoty lub wpłacie wymaganej zaliczki.
+
+§9. Rabaty i promocje
+- Rabaty, promocje oraz indywidualne zniżki nie podlegają łączeniu, chyba że wykonawca postanowi inaczej.
+- Wykonawca zastrzega sobie prawo do odmowy wykonania projektu po cenie niższej niż ustalona.
+
+§10. Dane do płatności
+- Klient jest zobowiązany do sprawdzenia poprawności danych płatności przed dokonaniem wpłaty.
+- Wykonawca nie ponosi odpowiedzialności za błędnie wykonane przelewy lub płatności dokonane na nieprawidłowe dane, jeśli przekazane informacje były poprawne.
+
+§11. Ochrona danych osobowych
+- Dane osobowe klientów przetwarzane są wyłącznie w zakresie niezbędnym do realizacji zamówienia.
+- Przetwarzanie danych odbywa się zgodnie z obowiązującymi przepisami dotyczącymi ochrony danych osobowych, w tym RODO.
+
+§12. Dostępne metody płatności:
+Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
+            </div>
         </div>
     </div>
 
     <script>
-        function switchView(viewName) {
-            document.querySelectorAll('.site-view').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.subpage-view').forEach(el => el.classList.remove('active'));
-            
-            if(viewName === 'home') {
-                document.getElementById('view-home').classList.add('active');
-            } else if(viewName === 'panel') {
-                document.getElementById('view-panel').classList.add('active');
+        // Skrypt do płynnego zapętlania karuzeli opinii (duplikowanie elementów)
+        const slider = document.getElementById('reviewsSlider');
+        slider.innerHTML += slider.innerHTML; // Duplikuje opinie, aby animacja przeszła płynnie w nieskończoność
+
+        // Funkcja przełączająca widok strony głównej na regulaminy i odwrotnie
+        function toggleRules() {
+            const mainView = document.getElementById('mainView');
+            const rulesView = document.getElementById('rules-view');
+            const toggleBtn = document.getElementById('toggleRulesBtn');
+
+            if (rulesView.style.display === 'block') {
+                rulesView.style.display = 'none';
+                mainView.style.display = 'block';
+                toggleBtn.innerText = 'Regulaminy';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                mainView.style.display = 'none';
+                rulesView.style.display = 'block';
+                toggleBtn.innerText = 'Strona Główna';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function openSubpage(subpageName) {
-            document.getElementById('view-home').classList.remove('active');
-            document.querySelectorAll('.subpage-view').forEach(el => el.classList.remove('active'));
-            document.getElementById('subpage-' + subpageName).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function closeSubpages() {
-            document.querySelectorAll('.subpage-view').forEach(el => el.classList.remove('active'));
-            document.getElementById('view-home').classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
