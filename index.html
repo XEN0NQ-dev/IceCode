@@ -17,6 +17,11 @@
 
         body {
             background-color: #0b0f0e;
+            /* Nowoczesne, niebieskie tło w kratkę (grid) */
+            background-image: 
+                linear-gradient(to right, rgba(59, 182, 252, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(59, 182, 252, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
             color: #ffffff;
             overflow-x: hidden;
         }
@@ -161,6 +166,33 @@
             gap: 15px;
         }
 
+        /* Przełącznik języków */
+        .lang-switcher {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3px;
+            gap: 3px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: #a0a0a0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: #3bb6fc;
+            color: #0b0f0e;
+        }
+
         .discord-btn-nav {
             background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
             color: #fff;
@@ -280,7 +312,6 @@
             align-items: center;
         }
 
-        /* Usunięte koło/ramka, zostaje samo logo z lekkim efektem świetlnym */
         .hero-image img {
             width: 340px;
             height: 340px;
@@ -294,7 +325,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Połączona sekcja: Nasze Oferty */
+        /* Nasze Oferty */
         .services-section {
             padding: 80px;
             max-width: 1400px;
@@ -321,7 +352,8 @@
         }
 
         .service-card {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(11, 15, 14, 0.7);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             padding: 35px;
             border-radius: 16px;
@@ -372,7 +404,7 @@
             line-height: 1.5;
         }
 
-        /* Opinie przesuwające się w lewo (bez ognistych ikonek) */
+        /* Opinie */
         .testimonials-section {
             padding: 80px 0;
             overflow: hidden;
@@ -396,7 +428,8 @@
         }
 
         .testimonial-card {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(11, 15, 14, 0.7);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             padding: 30px;
             border-radius: 16px;
@@ -446,7 +479,8 @@
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(11, 15, 14, 0.7);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             padding: 40px 30px;
             border-radius: 16px;
@@ -471,7 +505,7 @@
             font-weight: 500;
         }
 
-        /* Widok Regulaminów */
+        /* Regulaminy */
         #rules-wrapper {
             display: none;
             padding: 140px 80px 80px 80px;
@@ -490,7 +524,8 @@
         }
 
         .rule-box {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(11, 15, 14, 0.8);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             padding: 40px;
@@ -652,7 +687,7 @@
     <div id="intro-screen">
         <div class="intro-content">
             <div class="intro-logo">ICE<span>CODE</span></div>
-            <div class="loading-text">Ładowanie zawartości...</div>
+            <div class="loading-text" data-tr="loading">Ładowanie zawartości...</div>
             <div class="progress-bar-container">
                 <div class="progress-bar"></div>
             </div>
@@ -666,13 +701,18 @@
             ICECODE
         </a>
         <ul class="nav-links">
-            <li><a onclick="showMain(event)" class="active">Strona główna</a></li>
-            <li><a href="#oferty">Nasze Oferty</a></li>
-            <li><a href="#opinie">Opinie</a></li>
-            <li><a onclick="toggleRules(event)" style="color: #3bb6fc; font-weight: 700;">Regulaminy</a></li>
+            <li><a onclick="showMain(event)" class="active" data-tr="nav_home">Strona główna</a></li>
+            <li><a href="#oferty" data-tr="nav_offers">Nasze Oferty</a></li>
+            <li><a href="#opinie" data-tr="nav_reviews">Opinie</a></li>
+            <li><a onclick="toggleRules(event)" style="color: #3bb6fc; font-weight: 700;" data-tr="nav_rules">Regulaminy</a></li>
         </ul>
         <div class="nav-actions">
-            <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="discord-btn-nav">Dołącz na Discord</a>
+            <!-- Przełącznik Języków -->
+            <div class="lang-switcher">
+                <button class="lang-btn active" onclick="setLanguage('pl')">PL</button>
+                <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+            </div>
+            <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="discord-btn-nav" data-tr="nav_discord">Dołącz na Discord</a>
         </div>
     </nav>
 
@@ -682,12 +722,12 @@
         <header>
             <div class="hero-content">
                 <div class="hero-tag">
-                    <i class="fa-solid fa-fire"></i> ICECODE.PL – Profesjonalne usługi
+                    <i class="fa-solid fa-fire"></i> <span data-tr="hero_tag">ICECODE.PL – Profesjonalne usługi</span>
                 </div>
-                <h1>Tworzymy Przyszłość<br><span>Twojego Serwera</span></h1>
-                <p>Zaawansowane boty Discord, unikalne grafiki, strony WWW oraz profesjonalne wsparcie dla Twojego projektu!</p>
+                <h1 data-tr="hero_title">Tworzymy Przyszłość<br><span>Twojego Serwera</span></h1>
+                <p data-tr="hero_desc">Zaawansowane boty Discord, unikalne grafiki, strony WWW oraz profesjonalne wsparcie dla Twojego projektu!</p>
                 <div class="hero-buttons">
-                    <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> Dołącz na Discord</a>
+                    <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> <span data-tr="btn_discord">Dołącz na Discord</span></a>
                     <a href="https://tipply.pl/@xW0JTI" target="_blank" class="btn-secondary"><i class="fas fa-hand-holding-dollar"></i> Tipply (CEO)</a>
                 </div>
             </div>
@@ -696,60 +736,60 @@
             </div>
         </header>
 
-        <!-- Połączona sekcja: Nasze Oferty (Wszystko w jednej linii 3x2) -->
+        <!-- Nasze Oferty -->
         <section class="services-section" id="oferty">
-            <h2 class="section-title">Nasze Oferty</h2>
-            <p class="section-subtitle">Sprawdź co możemy dla Ciebie wykonać</p>
+            <h2 class="section-title" data-tr="offers_title">Nasze Oferty</h2>
+            <p class="section-subtitle" data-tr="offers_subtitle">Sprawdź co możemy dla Ciebie wykonać</p>
             
             <div class="services-grid">
                 <div class="service-card active-service">
-                    <span class="service-badge badge-open">OTWARTE</span>
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
                     <i class="fa-brands fa-discord"></i>
-                    <h3>Boty Discord</h3>
-                    <p>Zaawansowane boty integracyjne, systemy weryfikacji, tickety i moderacja dla Twojej społeczności.</p>
+                    <h3 data-tr="s1_title">Boty Discord</h3>
+                    <p data-tr="s1_desc">Zaawansowane boty integracyjne, systemy weryfikacji, tickety i moderacja dla Twojej społeczności.</p>
                 </div>
 
                 <div class="service-card active-service">
-                    <span class="service-badge badge-open">OTWARTE</span>
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
                     <i class="fa-solid fa-globe"></i>
-                    <h3>Strony WWW</h3>
-                    <p>Nowoczesne strony internetowe, panele oraz sklepy dostosowane pod Twoje wymagania.</p>
+                    <h3 data-tr="s2_title">Strony WWW</h3>
+                    <p data-tr="s2_desc">Nowoczesne strony internetowe, panele oraz sklepy dostosowane pod Twoje wymagania.</p>
                 </div>
 
                 <div class="service-card active-service">
-                    <span class="service-badge badge-open">OTWARTE</span>
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
                     <i class="fa-solid fa-paintbrush"></i>
-                    <h3>Grafika i Design</h3>
-                    <p>Profesjonalne grafiki użytkowe, banery promocyjne, logotypy i oprawy wizualne.</p>
+                    <h3 data-tr="s3_title">Grafika i Design</h3>
+                    <p data-tr="s3_desc">Profesjonalne grafiki użytkowe, banery promocyjne, logotypy i oprawy wizualne.</p>
                 </div>
 
                 <div class="service-card active-service">
-                    <span class="service-badge badge-open">OTWARTE</span>
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
                     <i class="fa-solid fa-map"></i>
-                    <h3>Autorskie Mapy</h3>
-                    <p>Unikalne i zoptymalizowane mapy pod tryby typu EasyHC, Survival, czy minigry.</p>
+                    <h3 data-tr="s4_title">Autorskie Mapy</h3>
+                    <p data-tr="s4_desc">Unikalne i zoptymalizowane mapy pod tryby typu EasyHC, Survival, czy minigry.</p>
                 </div>
 
                 <div class="service-card active-service">
-                    <span class="service-badge badge-open">OTWARTE</span>
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
                     <i class="fa-solid fa-box-archive"></i>
-                    <h3>Paczki Trybów</h3>
-                    <p>W pełni skonfigurowane paczki serwerowe gotowe do uruchomienia od zaraz.</p>
+                    <h3 data-tr="s5_title">Paczki Trybów</h3>
+                    <p data-tr="s5_desc">W pełni skonfigurowane paczki serwerowe gotowe do uruchomienia od zaraz.</p>
                 </div>
 
                 <div class="service-card active-service">
-                    <span class="service-badge badge-open">OTWARTE</span>
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
                     <i class="fa-solid fa-puzzle-piece"></i>
-                    <h3>Pluginy i Skrypty</h3>
-                    <p>Dedykowane rozwiązania zwiększające funkcjonalność i wydajność serwera.</p>
+                    <h3 data-tr="s6_title">Pluginy i Skrypty</h3>
+                    <p data-tr="s6_desc">Dedykowane rozwiązania zwiększające funkcjonalność i wydajność serwera.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Testimonials Section (Karuzela bez ogni) -->
+        <!-- Testimonials Section -->
         <section class="testimonials-section" id="opinie">
-            <h2 class="section-title" style="margin-bottom: 10px;">Zaufali Nam</h2>
-            <p class="section-subtitle" style="margin-bottom: 40px;">Opinie zadowolonych klientów z naszego serwera Discord</p>
+            <h2 class="section-title" style="margin-bottom: 10px;" data-tr="reviews_title">Zaufali Nam</h2>
+            <p class="section-subtitle" style="margin-bottom: 40px;" data-tr="reviews_subtitle">Opinie zadowolonych klientów z naszego serwera Discord</p>
 
             <div class="testimonials-slider">
                 <div class="testimonial-card">
@@ -832,7 +872,7 @@
                     <div class="testimonial-author">Blackweeed</div>
                 </div>
 
-                <!-- KOPIA DLA PŁYNNEJ PĘTLI -->
+                <!-- DUPLIKAT DLA PŁYNNEJ PĘTLI -->
                 <div class="testimonial-card">
                     <div>
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
@@ -909,18 +949,18 @@
 
         <!-- Statistics Section -->
         <section class="stats-section" id="statystyki">
-            <h2 class="section-title" style="margin-bottom: 10px;">Statystyki</h2>
-            <p class="section-subtitle">Sprawdzone i zweryfikowane dane</p>
+            <h2 class="section-title" style="margin-bottom: 10px;" data-tr="stats_title">Statystyki</h2>
+            <p class="section-subtitle" data-tr="stats_subtitle">Sprawdzone i zweryfikowane dane</p>
             <div class="stats-grid">
                 <div class="stat-card">
                     <i class="fa-solid fa-shield-check"></i>
                     <div class="stat-number">55+</div>
-                    <div class="stat-label">Legitchecki</div>
+                    <div class="stat-label" data-tr="stat_legits">Legitchecki</div>
                 </div>
                 <div class="stat-card">
                     <i class="fa-solid fa-users"></i>
                     <div class="stat-number">300+</div>
-                    <div class="stat-label">Osób na Discordzie</div>
+                    <div class="stat-label" data-tr="stat_users">Osób na Discordzie</div>
                 </div>
             </div>
         </section>
@@ -929,12 +969,12 @@
     <!-- WIDOK REGULAMINÓW -->
     <div id="rules-wrapper">
         <div class="rules-top-action">
-            <a href="#" onclick="showMain(event)" class="btn-primary"><i class="fa-solid fa-arrow-left"></i> Powrót na stronę główną</a>
+            <a href="#" onclick="showMain(event)" class="btn-primary"><i class="fa-solid fa-arrow-left"></i> <span data-tr="back_home">Powrót na stronę główną</span></a>
         </div>
         <div class="rules-grid">
             <div class="rule-box">
-                <h2>Regulamin Serwera Discord</h2>
-                <pre>ICECODE - Regulamin Serwera Discord
+                <h2 data-tr="rules_discord_title">Regulamin Serwera Discord</h2>
+                <pre data-tr="rules_discord_content">ICECODE - Regulamin Serwera Discord
 Nieznajomość regulaminu nie zwalnia z obowiązku jego przestrzegania. Dołączając do serwera Discord ICECODE.PL, automatycznie akceptujesz wszystkie poniższe zasady.
 
 §1. Kultura i szacunek
@@ -995,8 +1035,8 @@ Nieznajomość regulaminu nie zwalnia z obowiązku jego przestrzegania. Dołącz
             </div>
 
             <div class="rule-box">
-                <h2>Regulamin Płatności</h2>
-                <pre>ICECODE - Regulamin Płatności
+                <h2 data-tr="rules_payment_title">Regulamin Płatności</h2>
+                <pre data-tr="rules_payment_content">ICECODE - Regulamin Płatności
 Brak znajomości niniejszego regulaminu nie zwalnia z obowiązku jego przestrzegania. Korzystając z usług ICECODE oraz składając zamówienie, klient potwierdza zapoznanie się z jego treścią i akceptuje wszystkie zawarte w nim postanowienia.
 
 §1. Zwroty i odstąpienie od umowy
@@ -1058,24 +1098,24 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                     <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo">
                     ICECODE
                 </div>
-                <p>Profesjonalne rozwiązania dla serwerów i społeczności.</p>
+                <p data-tr="footer_desc">Profesjonalne rozwiązania dla serwerów i społeczności.</p>
             </div>
             <div class="footer-col">
-                <h4>SZYBKIE LINKI</h4>
+                <h4 data-tr="footer_links">SZYBKIE LINKI</h4>
                 <ul>
-                    <li><a onclick="showMain(event)">Strona główna</a></li>
-                    <li><a href="#oferty">Nasze Oferty</a></li>
-                    <li><a href="#opinie">Opinie</a></li>
+                    <li><a onclick="showMain(event)" data-tr="nav_home">Strona główna</a></li>
+                    <li><a href="#oferty" data-tr="nav_offers">Nasze Oferty</a></li>
+                    <li><a href="#opinie" data-tr="nav_reviews">Opinie</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>INFORMACJE PRAWNE</h4>
+                <h4 data-tr="footer_legal">INFORMACJE PRAWNE</h4>
                 <ul>
-                    <li><a onclick="toggleRules(event)">Regulaminy</a></li>
+                    <li><a onclick="toggleRules(event)" data-tr="nav_rules">Regulaminy</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>DOŁĄCZ DO SPOŁECZNOŚCI</h4>
+                <h4 data-tr="footer_social">DOŁĄCZ DO SPOŁECZNOŚCI</h4>
                 <div class="social-icons">
                     <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="social-icon-btn"><i class="fab fa-discord"></i></a>
                     <a href="https://youtube.com/@icecode-pl?si=96Rfsyn89vLCCB-1" target="_blank" class="social-icon-btn"><i class="fab fa-youtube"></i></a>
@@ -1084,12 +1124,112 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             </div>
         </div>
         <div class="footer-bottom">
-            <div>&copy; 2026 ICECODE. Wszystkie prawa zastrzeżone.</div>
+            <div>&copy; 2026 ICECODE. <span data-tr="footer_rights">Wszystkie prawa zastrzeżone.</span></div>
             <div class="dev-credit">This web was made by <span>XEN0NQ</span></div>
         </div>
     </footer>
 
     <script>
+        // Słownik tłumaczeń PL / EN
+        const translations = {
+            pl: {
+                loading: "Ładowanie zawartości...",
+                nav_home: "Strona główna",
+                nav_offers: "Nasze Oferty",
+                nav_reviews: "Opinie",
+                nav_rules: "Regulaminy",
+                nav_discord: "Dołącz na Discord",
+                hero_tag: "ICECODE.PL – Profesjonalne usługi",
+                hero_title: "Tworzymy Przyszłość<br><span>Twojego Serwera</span>",
+                hero_desc: "Zaawansowane boty Discord, unikalne grafiki, strony WWW oraz profesjonalne wsparcie dla Twojego projektu!",
+                btn_discord: "Dołącz na Discord",
+                offers_title: "Nasze Oferty",
+                offers_subtitle: "Sprawdź co możemy dla Ciebie wykonać",
+                badge_open: "OTWARTE",
+                s1_title: "Boty Discord",
+                s1_desc: "Zaawansowane boty integracyjne, systemy weryfikacji, tickety i moderacja dla Twojej społeczności.",
+                s2_title: "Strony WWW",
+                s2_desc: "Nowoczesne strony internetowe, panele oraz sklepy dostosowane pod Twoje wymagania.",
+                s3_title: "Grafika i Design",
+                s3_desc: "Profesjonalne grafiki użytkowe, banery promocyjne, logotypy i oprawy wizualne.",
+                s4_title: "Autorskie Mapy",
+                s4_desc: "Unikalne i zoptymalizowane mapy pod tryby typu EasyHC, Survival, czy minigry.",
+                s5_title: "Paczki Trybów",
+                s5_desc: "W pełni skonfigurowane paczki serwerowe gotowe do uruchomienia od zaraz.",
+                s6_title: "Pluginy i Skrypty",
+                s6_desc: "Dedykowane rozwiązania zwiększające funkcjonalność i wydajność serwera.",
+                reviews_title: "Zaufali Nam",
+                reviews_subtitle: "Opinie zadowolonych klientów z naszego serwera Discord",
+                stats_title: "Statystyki",
+                stats_subtitle: "Sprawdzone i zweryfikowane dane",
+                stat_legits: "Legitchecki",
+                stat_users: "Osób na Discordzie",
+                back_home: "Powrót na stronę główną",
+                rules_discord_title: "Regulamin Serwera Discord",
+                rules_payment_title: "Regulamin Płatności",
+                footer_desc: "Profesjonalne rozwiązania dla serwerów i społeczności.",
+                footer_links: "SZYBKIE LINKI",
+                footer_legal: "INFORMACJE PRAWNE",
+                footer_social: "DOŁĄCZ DO SPOŁECZNOŚCI",
+                footer_rights: "Wszystkie prawa zastrzeżone."
+            },
+            en: {
+                loading: "Loading content...",
+                nav_home: "Home",
+                nav_offers: "Our Offers",
+                nav_reviews: "Reviews",
+                nav_rules: "Rules",
+                nav_discord: "Join Discord",
+                hero_tag: "ICECODE.PL – Professional Services",
+                hero_title: "Building the Future<br><span>Of Your Server</span>",
+                hero_desc: "Advanced Discord bots, unique graphics, websites and professional support for your project!",
+                btn_discord: "Join Discord",
+                offers_title: "Our Offers",
+                offers_subtitle: "Check out what we can do for you",
+                badge_open: "OPEN",
+                s1_title: "Discord Bots",
+                s1_desc: "Advanced integration bots, verification systems, tickets and moderation for your community.",
+                s2_title: "Websites",
+                s2_desc: "Modern websites, control panels, and stores tailored to your requirements.",
+                s3_title: "Graphics & Design",
+                s3_desc: "Professional utility graphics, promotional banners, logos, and visual assets.",
+                s4_title: "Custom Maps",
+                s4_desc: "Unique and optimized maps for EasyHC, Survival, or minigames modes.",
+                s5_title: "Server Setups",
+                s5_desc: "Fully configured server setups ready to launch right away.",
+                s6_title: "Plugins & Scripts",
+                s6_desc: "Dedicated solutions increasing server functionality and performance.",
+                reviews_title: "Trusted By Many",
+                reviews_subtitle: "Reviews from satisfied clients on our Discord server",
+                stats_title: "Statistics",
+                stats_subtitle: "Checked and verified data",
+                stat_legits: "Legitchecks",
+                stat_users: "Discord Members",
+                back_home: "Back to Home",
+                rules_discord_title: "Discord Server Rules",
+                rules_payment_title: "Payment Terms",
+                footer_desc: "Professional solutions for servers and communities.",
+                footer_links: "QUICK LINKS",
+                footer_legal: "LEGAL INFO",
+                footer_social: "JOIN COMMUNITY",
+                footer_rights: "All rights reserved."
+            }
+        };
+
+        function setLanguage(lang) {
+            // Zmiana aktywnego przycisku
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Podmiana tekstów
+            document.querySelectorAll('[data-tr]').forEach(element => {
+                const key = element.getAttribute('data-tr');
+                if (translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+        }
+
         // Ekran ładowania intro
         window.addEventListener('load', () => {
             const introScreen = document.getElementById('intro-screen');
