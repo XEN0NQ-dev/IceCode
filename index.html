@@ -3,459 +3,935 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICECODE.PL - Usługi i Społeczność</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>ICECODE - Usługi i Społeczność</title>
+    <link rel="icon" type="image/png" href="https://imgur.com/6ugLZay.png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131b2e;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --border: #1f293d;
-        }
-
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
+            background-color: #0b0f0e;
+            color: #ffffff;
             overflow-x: hidden;
         }
 
-        /* Top Bar z regulaminem */
-        .top-bar {
-            background: linear-gradient(90deg, #1d4ed8, #3b82f6);
-            color: white;
-            padding: 12px 20px;
+        /* Ekran ładowania (intro) */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b0f0e;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .intro-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .intro-logo {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInLogo 1s ease forwards 0.3s;
+        }
+
+        .intro-logo span {
+            color: #3bb6fc;
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeInText 1s ease forwards 0.6s;
+        }
+
+        .progress-bar-container {
+            width: 280px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInBar 1s ease forwards 0.9s;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #3bb6fc, #818cf8);
+            border-radius: 4px;
+            animation: fillBar 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards 1.2s;
+        }
+
+        @keyframes fadeInLogo {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInText {
+            to { opacity: 1; }
+        }
+        @keyframes fadeInBar {
+            to { opacity: 1; }
+        }
+        @keyframes fillBar {
+            to { width: 100%; }
+        }
+
+        .hide-intro {
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+
+        /* Navbar */
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: 600;
-            position: sticky;
+            padding: 18px 60px;
+            background: rgba(11, 15, 14, 0.85);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .rules-toggle-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        .rules-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Główny kontener */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        /* Widok regulaminu (ukryty domyślnie) */
-        #rules-view {
-            display: none;
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .rules-header {
+        .nav-brand {
             display: flex;
             align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-brand img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #3bb6fc;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .discord-btn-nav {
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .discord-btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Główny kontener strony */
+        #main-wrapper {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Hero Section */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 150px 80px 80px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59, 182, 252, 0.1);
+            color: #3bb6fc;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid rgba(59, 182, 252, 0.2);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .hero-content h1 span {
+            color: #3bb6fc;
+        }
+
+        .hero-content p {
+            color: #a0a0a0;
+            font-size: 1.05rem;
+            line-height: 1.6;
             margin-bottom: 30px;
         }
 
-        .back-btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
+        .hero-buttons {
             display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #3bb6fc;
+            color: #0b0f0e;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(59, 182, 252, 0.3);
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: background 0.2s;
         }
 
-        .back-btn:hover {
-            background: var(--accent-hover);
+        .btn-primary:hover {
+            background: #259ee0;
+            transform: translateY(-2px);
         }
 
-        .rules-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        @media(max-width: 900px) {
-            .rules-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .rules-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 30px;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
-        .rules-card h2 {
-            color: var(--accent);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-
-        .rules-card pre {
-            white-space: pre-wrap;
-            font-family: 'Inter', sans-serif;
-            color: var(--text-muted);
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
             font-size: 0.95rem;
-            line-height: 1.6;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* Nagłówek strony głównej */
-        header {
-            text-align: center;
-            margin-bottom: 50px;
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .logo-container {
-            width: 140px;
-            height: 140px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid var(--accent);
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .logo-container img {
-            width: 100%;
-            height: 100%;
+        .hero-image img {
+            width: 360px;
+            height: 360px;
             object-fit: cover;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 35px rgba(59, 182, 252, 0.4));
+            border: 4px solid rgba(59, 182, 252, 0.3);
+            animation: float 4s ease-in-out infinite;
         }
 
-        h1 {
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Sekcja Usług / Map i Paczek */
+        .services-section {
+            padding: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
             font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 10px;
-            background: linear-gradient(90deg, #60a5fa, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        /* Przyciski społecznościowe / linki */
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+        .section-subtitle {
+            text-align: center;
+            color: #a0a0a0;
             margin-bottom: 50px;
         }
 
-        .social-btn {
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 35px;
+            border-radius: 16px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .service-card.active-service {
+            border-color: rgba(59, 182, 252, 0.4);
+        }
+
+        .service-card.active-service:hover {
+            transform: translateY(-5px);
+            border-color: #3bb6fc;
+        }
+
+        .service-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge-open {
+            background: rgba(59, 182, 252, 0.15);
+            color: #3bb6fc;
+            border: 1px solid rgba(59, 182, 252, 0.3);
+        }
+
+        .service-card i {
+            font-size: 2.2rem;
+            color: #3bb6fc;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Opinie przesuwające się w lewo */
+        .testimonials-section {
+            padding: 80px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonials-slider {
             display: flex;
+            gap: 30px;
+            width: max-content;
+            animation: scrollLeft 40s linear infinite;
+        }
+
+        .testimonials-slider:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 30px;
+            border-radius: 16px;
+            width: 360px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stars {
+            color: #f59e0b;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-text {
+            color: #d1d5db;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: #3bb6fc;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 12px 24px;
-            border-radius: 12px;
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s ease;
         }
-
-        .social-btn:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-        }
-
-        .social-btn.discord { color: #5865F2; }
-        .social-btn.youtube { color: #FF0000; }
-        .social-btn.tipply { color: #10b981; }
 
         /* Statystyki */
+        .stats-section {
+            padding: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 40px 30px;
             border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            color: #3bb6fc;
+            margin-bottom: 20px;
         }
 
         .stat-number {
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--accent);
-            margin-bottom: 5px;
+            color: #fff;
+            margin-bottom: 8px;
         }
 
         .stat-label {
-            color: var(--text-muted);
+            color: #a0a0a0;
+            font-size: 1rem;
             font-weight: 500;
         }
 
-        /* Sekcja Map i Paczek (Osobno) */
-        .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            font-weight: 700;
+        /* Widok Regulaminów (ukryty domyślnie) */
+        #rules-wrapper {
+            display: none;
+            padding: 140px 80px 80px 80px;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .rules-top-action {
+            margin-bottom: 30px;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .rule-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 40px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .rule-box h2 {
+            color: #3bb6fc;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+        }
+
+        .rule-box pre {
+            white-space: pre-wrap;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(8, 11, 10, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 60px 80px 30px 80px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-brand-col img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .footer-brand-title {
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-
-        .section-title i {
-            color: var(--accent);
-        }
-
-        .maps-packs-section {
-            margin-bottom: 60px;
-        }
-
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .item-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 25px;
-            transition: transform 0.2s;
-        }
-
-        .item-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .item-card h3 {
-            margin-bottom: 10px;
-            font-size: 1.25rem;
-        }
-
-        .item-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
             margin-bottom: 15px;
         }
 
-        /* Karuzela opinii lecących w lewo */
-        .reviews-section {
-            margin-bottom: 40px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .reviews-slider {
-            display: flex;
-            gap: 20px;
-            width: max-content;
-            animation: scrollLeft 35s linear infinite;
-        }
-
-        .reviews-slider:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scrollLeft {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .review-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 14px;
-            width: 320px;
-            flex-shrink: 0;
-        }
-
-        .review-author {
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-            color: var(--accent);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .review-text {
-            color: var(--text-muted);
+        .footer-brand-col p {
+            color: #888;
             font-size: 0.9rem;
-            line-height: 1.4;
+            line-height: 1.5;
+            max-width: 300px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-col ul a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-col ul a:hover {
+            color: #3bb6fc;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icon-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icon-btn:hover {
+            background: #3bb6fc;
+            color: #0b0f0e;
+            border-color: #3bb6fc;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 30px auto 0 auto;
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 968px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 120px;
+                gap: 50px;
+            }
+            .services-grid, .footer-content, .rules-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            nav {
+                padding: 20px 30px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Górny pasek z przełącznikiem regulaminu -->
-    <div class="top-bar">
-        <span>📜 Zapoznaj się z regulaminami serwera i płatności ICECODE</span>
-        <button class="rules-toggle-btn" id="toggleRulesBtn" onclick="toggleRules()">Regulaminy</button>
+    <!-- Ekran startowy (intro) -->
+    <div id="intro-screen">
+        <div class="intro-content">
+            <div class="intro-logo">ICE<span>CODE</span></div>
+            <div class="loading-text">Ładowanie zawartości...</div>
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
     </div>
 
-    <!-- GŁÓWNA STRONA -->
-    <div class="main-container" id="mainView">
+    <!-- Navbar -->
+    <nav>
+        <a href="#" class="nav-brand" onclick="showMain(event)">
+            <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo">
+            ICECODE
+        </a>
+        <ul class="nav-links">
+            <li><a onclick="showMain(event)" class="active">Strona główna</a></li>
+            <li><a href="#uslugi">Oferta</a></li>
+            <li><a href="#mapy">Mapy i Paczki</a></li>
+            <li><a href="#opinie">Opinie</a></li>
+            <li><a onclick="toggleRules(event)" style="color: #3bb6fc; font-weight: 700;">Regulaminy</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="discord-btn-nav">Dołącz na Discord</a>
+        </div>
+    </nav>
+
+    <!-- GŁÓWNA ZAWARTOŚĆ STRONY -->
+    <div id="main-wrapper">
+        <!-- Hero Section -->
         <header>
-            <div class="logo-container">
-                <img src="https://i.imgur.com/6ugLZay.png" alt="ICECODE Logo">
+            <div class="hero-content">
+                <div class="hero-tag">
+                    <i class="fa-solid fa-fire"></i> ICECODE.PL – Profesjonalne usługi
+                </div>
+                <h1>Tworzymy Przyszłość<br><span>Twojego Serwera</span></h1>
+                <p>Zaawansowane boty Discord, unikalne grafiki, strony WWW oraz profesjonalne wsparcie dla Twojego projektu!</p>
+                <div class="hero-buttons">
+                    <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> Dołącz na Discord</a>
+                    <a href="https://tipply.pl/@xW0JTI" target="_blank" class="btn-secondary"><i class="fas fa-hand-holding-dollar"></i> Tipply (CEO)</a>
+                </div>
             </div>
-            <h1>ICECODE</h1>
-            <p class="subtitle">Profesjonalne usługi, boty, grafiki i społeczność</p>
+            <div class="hero-image">
+                <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo 3D">
+            </div>
         </header>
 
-        <!-- Przyciski społecznościowe / Linki -->
-        <div class="socials">
-            <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="social-btn discord">
-                <i class="fab fa-discord"></i> Discord Server
-            </a>
-            <a href="https://youtube.com/@icecode-pl?si=96Rfsyn89vLCCB-1" target="_blank" class="social-btn youtube">
-                <i class="fab fa-youtube"></i> YouTube Channel
-            </a>
-            <a href="https://tipply.pl/@xW0JTI" target="_blank" class="social-btn tipply">
-                <i class="fas fa-hand-holding-dollar"></i> Tipply (CEO)
-            </a>
-        </div>
+        <!-- Services Section (Oferta) -->
+        <section class="services-section" id="uslugi">
+            <h2 class="section-title">Nasza Oferta</h2>
+            <p class="section-subtitle">Sprawdź co możemy dla Ciebie wykonać</p>
+            
+            <div class="services-grid">
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open">OTWARTE</span>
+                    <i class="fa-brands fa-discord"></i>
+                    <h3>Boty Discord</h3>
+                    <p>Zaawansowane boty integracyjne, systemy weryfikacji, tickety i moderacja dla Twojej społeczności.</p>
+                </div>
 
-        <!-- Statystyki -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">55+</div>
-                <div class="stat-label">Legitchecków</div>
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open">OTWARTE</span>
+                    <i class="fa-solid fa-globe"></i>
+                    <h3>Strony WWW</h3>
+                    <p>Nowoczesne strony internetowe, panele oraz sklepy dostosowane pod Twoje wymagania.</p>
+                </div>
+
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open">OTWARTE</span>
+                    <i class="fa-solid fa-paintbrush"></i>
+                    <h3>Grafika i Design</h3>
+                    <p>Profesjonalne grafiki użytkowe, banery promocyjne, logotypy i oprawy wizualne.</p>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">300+</div>
-                <div class="stat-label">Osób na Discordzie</div>
-            </div>
-        </div>
+        </section>
 
         <!-- Osobna sekcja: Mapy i Paczki -->
-        <div class="maps-packs-section">
-            <h2 class="section-title"><i class="fas fa-box-archive"></i> Mapy i Paczki</h2>
-            <div class="items-grid">
-                <div class="item-card">
-                    <h3>Autorskie Mapy Minecraft</h3>
-                    <p>Profesjonalnie przygotowane mapy pod serwery typu EasyHC, Survival oraz minigry.</p>
-                    <span style="color: var(--accent); font-weight: 600; font-size: 0.9rem;">Sprawdź na DC &rarr;</span>
+        <section class="services-section" id="mapy" style="padding-top: 0;">
+            <h2 class="section-title">Mapy i Paczki</h2>
+            <p class="section-subtitle">Gotowe rozwiązania serwerowe najwyższej jakości</p>
+            
+            <div class="services-grid">
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open">OTWARTE</span>
+                    <i class="fa-solid fa-map"></i>
+                    <h3>Autorskie Mapy</h3>
+                    <p>Unikalne i zoptymalizowane mapy pod tryby typu EasyHC, Survival, czy minigry.</p>
                 </div>
-                <div class="item-card">
-                    <h3>Paczki Zasobów / Skiny</h3>
-                    <p>Dopracowane paczki tekstur, ikon oraz unikalne skiny dostosowane pod Twoje wymagania.</p>
-                    <span style="color: var(--accent); font-weight: 600; font-size: 0.9rem;">Sprawdź na DC &rarr;</span>
-                </div>
-                <div class="item-card">
-                    <h3>Konfiguracje / Pluginy</h3>
-                    <p>Gotowe setupy trybów oraz autorskie skrypty i pluginy zwiększające wydajność serwera.</p>
-                    <span style="color: var(--accent); font-weight: 600; font-size: 0.9rem;">Sprawdź na DC &rarr;</span>
-                </div>
-            </div>
-        </div>
 
-        <!-- Opinie lecące w lewo -->
-        <div class="reviews-section">
-            <h2 class="section-title" style="margin-bottom: 20px;"><i class="fas fa-star"></i> Opinie klientów</h2>
-            <div class="reviews-slider" id="reviewsSlider">
-                <!-- Zestaw opinii z Twoich screenów -->
-                <div class="review-card">
-                    <div class="review-author">Itzz_L4L1Vex66 <span>🔥 2</span></div>
-                    <div class="review-text">IcEcOdE on top. Zajebistka strefa premium!</div>
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open">OTWARTE</span>
+                    <i class="fa-solid fa-box-archive"></i>
+                    <h3>Paczki Trybów</h3>
+                    <p>W pełni skonfigurowane paczki serwerowe gotowe do uruchomienia od zaraz.</p>
                 </div>
-                <div class="review-card">
-                    <div class="review-author">Grzesiek [DEV] <span>🔥 3</span></div>
-                    <div class="review-text">Piękne grafiki 🤖</div>
-                </div>
-                <div class="review-card">
-                    <div class="review-author">qvh <span>🔥 2</span></div>
-                    <div class="review-text">Dali mi za darmo to sie ciesze ;3 Grafiki takie piekne ze tak sie oplacalo, polecam.</div>
-                </div>
-                <div class="review-card">
-                    <div class="review-author">!_chyba_szymek! <span>🔥 2</span></div>
-                    <div class="review-text">Zarambisty skinek, tak mi sie spodobal i innym ze 40 innych osob zaczelo go nosic. Szacunek!</div>
-                </div>
-                <div class="review-card">
-                    <div class="review-author">Chlebek [SUPPORT] <span>🔥 4</span></div>
-                    <div class="review-text">Legit Serwer! Idealny najlepszy Code. Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni 🏆</div>
-                </div>
-                <div class="review-card">
-                    <div class="review-author">szhakal_ <span>🔥 1</span></div>
-                    <div class="review-text">legit server zakupilem bota i strefę premium.</div>
-                </div>
-                <div class="review-card">
-                    <div class="review-author">XENONQ <span>🔥 3</span></div>
-                    <div class="review-text">zajebistye embedy polecam.</div>
-                </div>
-                <div class="review-card">
-                    <div class="review-author">Marchewkav2 <span>🔥 2</span></div>
-                    <div class="review-text">legit serwer .. najlepszy code.</div>
-                </div>
-                <div class="review-card">
-                    <div class="review-author">DEMONI <span>🔥 3</span></div>
-                    <div class="review-text">Oczywiście premium i embed zajebista robota 🧊 on top.</div>
-                </div>
-                <div class="review-card">
-                    <div class="review-author">Blackweeed <span>🔥 5</span></div>
-                    <div class="review-text">Legit bot dc najlepszy jakiego widziałem.</div>
+
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open">OTWARTE</span>
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                    <h3>Pluginy i Skrypty</h3>
+                    <p>Dedykowane rozwiązania zwiększające funkcjonalność i wydajność serwera.</p>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Testimonials Section (Karuzela opinii lecąca w lewo) -->
+        <section class="testimonials-section" id="opinie">
+            <h2 class="section-title" style="margin-bottom: 10px;">Zaufali Nam</h2>
+            <p class="section-subtitle" style="margin-bottom: 40px;">Opinie zadowolonych klientów z naszego serwera Discord</p>
+
+            <div class="testimonials-slider">
+                <!-- Zestaw opinii z przesłanych screenów (Zduplikowany dla idealnej ciągłości pętli) -->
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"IcEcOdE on top."</p>
+                    </div>
+                    <div class="testimonial-author">Itzz_L4L1Vex66 <span>🔥 2</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Piękne grafiki 🤖"</p>
+                    </div>
+                    <div class="testimonial-author">Grzesiek [DEV] <span>🔥 3</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"grafiki takie piekne ze tak sie oplacalo polecam"</p>
+                    </div>
+                    <div class="testimonial-author">qvh <span>🔥 2</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Zarambisty skinek tak mi sie spodobal i innym ze 40 innych osob zaczelo go nosic naprawdę szacunek wojtek ❤️ zajebsity skinek i grafiki"</p>
+                    </div>
+                    <div class="testimonial-author">!_chyba_szymek! <span>🔥 2</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Szczerze powiem bez zamulania prosto z serca odkryłem tego typka... opinia jest jednoznaczna: KOGA KOSZTOWALO TYLE CO 1 LIZAK W SKLEPIE"</p>
+                    </div>
+                    <div class="testimonial-author">Usunięty Użytkownik <span>🔥 1</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni 🏆"</p>
+                    </div>
+                    <div class="testimonial-author">Chlebek [SUPPORT] <span>🔥 4</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"legit server zakupilem bota i strefę premium"</p>
+                    </div>
+                    <div class="testimonial-author">szhakal_ <span>🔥 1</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"zajebistye embedy polecam"</p>
+                    </div>
+                    <div class="testimonial-author">XENONQ <span>🔥 3</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Oczywiście premium i embed zajebista robota 🧊 on top"</p>
+                    </div>
+                    <div class="testimonial-author">DEMONI <span>🔥 3</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Legit bot dc najlepszy jakiego widziałem"</p>
+                    </div>
+                    <div class="testimonial-author">Blackweeed <span>🔥 5</span></div>
+                </div>
+
+                <!-- KOPIA DLA PŁYNNEJ PĘTLI -->
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"IcEcOdE on top."</p>
+                    </div>
+                    <div class="testimonial-author">Itzz_L4L1Vex66 <span>🔥 2</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Piękne grafiki 🤖"</p>
+                    </div>
+                    <div class="testimonial-author">Grzesiek [DEV] <span>🔥 3</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"grafiki takie piekne ze tak sie oplacalo polecam"</p>
+                    </div>
+                    <div class="testimonial-author">qvh <span>🔥 2</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Zarambisty skinek tak mi sie spodobal i innym ze 40 innych osob zaczelo go nosic naprawdę szacunek wojtek ❤️"</p>
+                    </div>
+                    <div class="testimonial-author">!_chyba_szymek! <span>🔥 2</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni 🏆"</p>
+                    </div>
+                    <div class="testimonial-author">Chlebek [SUPPORT] <span>🔥 4</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"legit server zakupilem bota i strefę premium"</p>
+                    </div>
+                    <div class="testimonial-author">szhakal_ <span>🔥 1</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"zajebistye embedy polecam"</p>
+                    </div>
+                    <div class="testimonial-author">XENONQ <span>🔥 3</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Oczywiście premium i embed zajebista robota 🧊 on top"</p>
+                    </div>
+                    <div class="testimonial-author">DEMONI <span>🔥 3</span></div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Legit bot dc najlepszy jakiego widziałem"</p>
+                    </div>
+                    <div class="testimonial-author">Blackweeed <span>🔥 5</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="stats-section" id="statystyki">
+            <h2 class="section-title" style="margin-bottom: 10px;">Statystyki</h2>
+            <p class="section-subtitle">Sprawdzone i zweryfikowane dane</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fa-solid fa-shield-check"></i>
+                    <div class="stat-number">55+</div>
+                    <div class="stat-label">Legitchecki</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-users"></i>
+                    <div class="stat-number">300+</div>
+                    <div class="stat-label">Osób na Discordzie</div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <!-- WIDOK REGULAMINÓW (Ukryty domyślnie, pojawia się po kliknięciu) -->
-    <div id="rules-view">
-        <div class="rules-header">
-            <button class="back-btn" onclick="toggleRules()"><i class="fas fa-arrow-left"></i> Powrót</button>
+    <!-- WIDOK REGULAMINÓW (Zastępuje stronę główną po kliknięciu) -->
+    <div id="rules-wrapper">
+        <div class="rules-top-action">
+            <a href="#" onclick="showMain(event)" class="btn-primary"><i class="fa-solid fa-arrow-left"></i> Powrót na stronę główną</a>
         </div>
         <div class="rules-grid">
-            <!-- Regulamin Serwera -->
-            <div class="rules-card">
+            <div class="rule-box">
                 <h2>Regulamin Serwera Discord</h2>
                 <pre>ICECODE - Regulamin Serwera Discord
 Nieznajomość regulaminu nie zwalnia z obowiązku jego przestrzegania. Dołączając do serwera Discord ICECODE.PL, automatycznie akceptujesz wszystkie poniższe zasady.
@@ -517,8 +993,7 @@ Nieznajomość regulaminu nie zwalnia z obowiązku jego przestrzegania. Dołącz
 - W sprawach nieuregulowanych niniejszym regulaminem decyzję podejmuje administracja serwera.</pre>
             </div>
 
-            <!-- Regulamin Płatności -->
-            <div class="rules-card">
+            <div class="rule-box">
                 <h2>Regulamin Płatności</h2>
                 <pre>ICECODE - Regulamin Płatności
 Brak znajomości niniejszego regulaminu nie zwalnia z obowiązku jego przestrzegania. Korzystając z usług ICECODE oraz składając zamówienie, klient potwierdza zapoznanie się z jego treścią i akceptuje wszystkie zawarte w nim postanowienia.
@@ -547,7 +1022,7 @@ Brak znajomości niniejszego regulaminu nie zwalnia z obowiązku jego przestrzeg
 
 §6. Poprawki
 - Drobne poprawki zgłoszone bezpośrednio po zakończeniu projektu mogą zostać wykonane bez dodatkowych opłat.
-- Po upływie 30 dni od zakończenia realizacji wszelkie poprawki, aktualizacje lub modyfikacje są traktowane jako usługa dodatková i mogą podlegać opłacie.
+- Po upływie 30 dni od zakończenia realizacji wszelkie poprawki, aktualizacje lub modyfikacje są traktowane jako usługa dodatkowa i mogą podlegać opłacie.
 
 §7. Rozwiązywanie sporów
 - Wykonawca nie jest zobowiązany do uczestnictwa w pozasądowych procedurach rozwiązywania sporów konsumenckich (ADR/ODR), chyba że wymagają tego obowiązujące przepisy prawa.
@@ -574,28 +1049,75 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand-col">
+                <div class="footer-brand-title">
+                    <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo">
+                    ICECODE
+                </div>
+                <p>Profesjonalne rozwiązania dla serwerów i społeczności.</p>
+            </div>
+            <div class="footer-col">
+                <h4>SZYBKIE LINKI</h4>
+                <ul>
+                    <li><a onclick="showMain(event)">Strona główna</a></li>
+                    <li><a href="#uslugi">Oferta</a></li>
+                    <li><a href="#mapy">Mapy i Paczki</a></li>
+                    <li><a href="#opinie">Opinie</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>INFORMACJE PRAWNE</h4>
+                <ul>
+                    <li><a onclick="toggleRules(event)">Regulaminy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>DOŁĄCZ DO SPOŁECZNOŚCI</h4>
+                <div class="social-icons">
+                    <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="social-icon-btn"><i class="fab fa-discord"></i></a>
+                    <a href="https://youtube.com/@icecode-pl?si=96Rfsyn89vLCCB-1" target="_blank" class="social-icon-btn"><i class="fab fa-youtube"></i></a>
+                    <a href="https://tipply.pl/@xW0JTI" target="_blank" class="social-icon-btn"><i class="fas fa-hand-holding-dollar"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 ICECODE. Wszystkie prawa zastrzeżone.
+        </div>
+    </footer>
+
     <script>
-        // Skrypt do płynnego zapętlania karuzeli opinii (duplikowanie elementów)
-        const slider = document.getElementById('reviewsSlider');
-        slider.innerHTML += slider.innerHTML; // Duplikuje opinie, aby animacja przeszła płynnie w nieskończoność
+        // Ekran ładowania intro
+        window.addEventListener('load', () => {
+            const introScreen = document.getElementById('intro-screen');
+            setTimeout(() => {
+                introScreen.classList.add('hide-intro');
+            }, 3200);
+        });
 
-        // Funkcja przełączająca widok strony głównej na regulaminy i odwrotnie
-        function toggleRules() {
-            const mainView = document.getElementById('mainView');
-            const rulesView = document.getElementById('rules-view');
-            const toggleBtn = document.getElementById('toggleRulesBtn');
+        // Przełączanie widoków: Strona Główna <-> Regulaminy
+        function toggleRules(e) {
+            e.preventDefault();
+            const mainWrapper = document.getElementById('main-wrapper');
+            const rulesWrapper = document.getElementById('rules-wrapper');
 
-            if (rulesView.style.display === 'block') {
-                rulesView.style.display = 'none';
-                mainView.style.display = 'block';
-                toggleBtn.innerText = 'Regulaminy';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (rulesWrapper.style.display === 'block') {
+                rulesWrapper.style.display = 'none';
+                mainWrapper.style.display = 'block';
             } else {
-                mainView.style.display = 'none';
-                rulesView.style.display = 'block';
-                toggleBtn.innerText = 'Strona Główna';
+                mainWrapper.style.display = 'none';
+                rulesWrapper.style.display = 'block';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
+        }
+
+        function showMain(e) {
+            e.preventDefault();
+            document.getElementById('rules-wrapper').style.display = 'none';
+            document.getElementById('main-wrapper').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
