@@ -25,7 +25,6 @@
             overflow-x: hidden;
         }
 
-        /* Ekran ładowania (intro) */
         #intro-screen {
             position: fixed;
             top: 0;
@@ -107,7 +106,6 @@
             visibility: hidden !important;
         }
 
-        /* Navbar */
         nav {
             display: flex;
             justify-content: space-between;
@@ -165,7 +163,6 @@
             gap: 15px;
         }
 
-        /* Przełącznik języków z grafikami flag */
         .lang-switcher {
             display: flex;
             background: rgba(255, 255, 255, 0.05);
@@ -223,7 +220,6 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Hero Section */
         header {
             min-height: 100vh;
             display: flex;
@@ -334,7 +330,6 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Nasze Oferty */
         .services-section {
             padding: 80px;
             max-width: 1400px;
@@ -413,7 +408,6 @@
             line-height: 1.5;
         }
 
-        /* Opinie */
         .testimonials-section {
             padding: 80px 0;
             overflow: hidden;
@@ -471,7 +465,6 @@
             align-items: center;
         }
 
-        /* Statystyki */
         .stats-section {
             padding: 80px;
             max-width: 1400px;
@@ -514,7 +507,6 @@
             font-weight: 500;
         }
 
-        /* Regulaminy */
         #rules-wrapper {
             display: none;
             padding: 140px 80px 80px 80px;
@@ -556,7 +548,6 @@
             line-height: 1.6;
         }
 
-        /* Footer */
         footer {
             background: rgba(8, 11, 10, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -692,7 +683,6 @@
 </head>
 <body>
 
-    <!-- Ekran startowy (intro) -->
     <div id="intro-screen">
         <div class="intro-content">
             <div class="intro-logo">ICE<span>CODE</span></div>
@@ -703,7 +693,6 @@
         </div>
     </div>
 
-    <!-- Navbar -->
     <nav>
         <a href="#" class="nav-brand" onclick="showMain(event)">
             <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo">
@@ -716,7 +705,6 @@
             <li><a onclick="toggleRules(event)" style="color: #3bb6fc; font-weight: 700;" data-tr="nav_rules">Regulaminy</a></li>
         </ul>
         <div class="nav-actions">
-            <!-- Przełącznik Języków z flagami -->
             <div class="lang-switcher">
                 <button class="lang-btn active" onclick="setLanguage('pl')">PL <img src="https://flagcdn.com/w20/pl.png" alt="Flaga PL"></button>
                 <button class="lang-btn" onclick="setLanguage('en')">EN <img src="https://flagcdn.com/w20/gb.png" alt="Flaga EN"></button>
@@ -725,9 +713,7 @@
         </div>
     </nav>
 
-    <!-- GŁÓWNA ZAWARTOŚĆ STRONY -->
     <div id="main-wrapper">
-        <!-- Hero Section -->
         <header>
             <div class="hero-content">
                 <div class="hero-tag">
@@ -745,7 +731,6 @@
             </div>
         </header>
 
-        <!-- Nasze Oferty -->
         <section class="services-section" id="oferty">
             <h2 class="section-title" data-tr="offers_title">Nasze Oferty</h2>
             <p class="section-subtitle" data-tr="offers_subtitle">Sprawdź co możemy dla Ciebie wykonać</p>
@@ -795,7 +780,6 @@
             </div>
         </section>
 
-        <!-- Testimonials Section -->
         <section class="testimonials-section" id="opinie">
             <h2 class="section-title" style="margin-bottom: 10px;" data-tr="reviews_title">Zaufali Nam</h2>
             <p class="section-subtitle" style="margin-bottom: 40px;" data-tr="reviews_subtitle">Opinie zadowolonych klientów z naszego serwera Discord</p>
@@ -881,7 +865,6 @@
                     <div class="testimonial-author">Blackweeed</div>
                 </div>
 
-                <!-- DUPLIKAT DLA PŁYNNEJ PĘTLI -->
                 <div class="testimonial-card">
                     <div>
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
@@ -956,7 +939,6 @@
             </div>
         </section>
 
-        <!-- Statistics Section -->
         <section class="stats-section" id="statystyki">
             <h2 class="section-title" style="margin-bottom: 10px;" data-tr="stats_title">Statystyki</h2>
             <p class="section-subtitle" data-tr="stats_subtitle">Sprawdzone i zweryfikowane dane</p>
@@ -975,7 +957,6 @@
         </section>
     </div>
 
-    <!-- WIDOK REGULAMINÓW -->
     <div id="rules-wrapper">
         <div class="rules-top-action">
             <a href="#" onclick="showMain(event)" class="btn-primary"><i class="fa-solid fa-arrow-left"></i> <span data-tr="back_home">Powrót na stronę główną</span></a>
@@ -1099,7 +1080,6 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-brand-col">
@@ -1139,7 +1119,6 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
     </footer>
 
     <script>
-        // Słownik tłumaczeń PL / EN
         const translations = {
             pl: {
                 loading: "Ładowanie zawartości...",
@@ -1226,11 +1205,9 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
         };
 
         function setLanguage(lang) {
-            // Zmiana aktywnego przycisku
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             event.currentTarget.classList.add('active');
 
-            // Podmiana tekstów
             document.querySelectorAll('[data-tr]').forEach(element => {
                 const key = element.getAttribute('data-tr');
                 if (translations[lang][key]) {
@@ -1239,7 +1216,6 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             });
         }
 
-        // Ekran ładowania intro
         window.addEventListener('load', () => {
             const introScreen = document.getElementById('intro-screen');
             setTimeout(() => {
@@ -1247,7 +1223,6 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             }, 3200);
         });
 
-        // Przełączanie widoków: Strona Główna <-> Regulaminy
         function toggleRules(e) {
             e.preventDefault();
             const mainWrapper = document.getElementById('main-wrapper');
