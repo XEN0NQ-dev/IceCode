@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICECODE</title>
+    <title>ICECODE - Usługi i Społeczność</title>
+    <link rel="icon" type="image/png" href="https://imgur.com/6ugLZay.png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            background-color: #0b0f19;
-            color: #fff;
+            background-color: #0b0f0e;
+            background-image: 
+                linear-gradient(to right, rgba(59, 182, 252, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(59, 182, 252, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: #ffffff;
             overflow-x: hidden;
         }
 
@@ -30,261 +31,413 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0b0f19;
+            background: #0b0f0e;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
             transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
-        #intro-screen.hide-intro {
-            opacity: 0;
-            visibility: hidden;
-        }
-
         .intro-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            animation: pulseIntro 1.5s infinite alternate;
         }
 
-        .intro-content img {
-            width: 100px;
-            margin-bottom: 20px;
-        }
-
-        .intro-content h1 {
-            font-size: 2rem;
-            color: #38bdf8;
+        .intro-logo {
+            font-size: 3rem;
+            font-weight: 800;
             letter-spacing: 2px;
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInLogo 1s ease forwards 0.3s;
         }
 
-        @keyframes pulseIntro {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.05); opacity: 1; }
+        .intro-logo span {
+            color: #3bb6fc;
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeInText 1s ease forwards 0.6s;
+        }
+
+        .progress-bar-container {
+            width: 280px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInBar 1s ease forwards 0.9s;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #3bb6fc, #818cf8);
+            border-radius: 4px;
+            animation: fillBar 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards 1.2s;
+        }
+
+        @keyframes fadeInLogo {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInText {
+            to { opacity: 1; }
+        }
+        @keyframes fadeInBar {
+            to { opacity: 1; }
+        }
+        @keyframes fillBar {
+            to { width: 100%; }
+        }
+
+        .hide-intro {
+            opacity: 0 !important;
+            visibility: hidden !important;
         }
 
         nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 50px;
-            background: rgba(11, 15, 25, 0.85);
-            backdrop-filter: blur(10px);
+            padding: 18px 60px;
+            background: rgba(11, 15, 14, 0.85);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
+            top: 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .logo {
+        .nav-brand {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-weight: bold;
-            font-size: 1.2rem;
+            font-weight: 700;
+            font-size: 1.1rem;
             color: #fff;
             text-decoration: none;
         }
 
-        .logo img {
-            width: 35px;
-            height: 35px;
+        .nav-brand img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            border-radius: 50%;
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 25px;
             list-style: none;
             align-items: center;
         }
 
         .nav-links a {
+            color: #a0a0a0;
             text-decoration: none;
-            color: #aaa;
             font-weight: 500;
+            font-size: 0.95rem;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active-link {
-            color: #38bdf8;
+        .nav-links a:hover, .nav-links a.active {
+            color: #3bb6fc;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .lang-switcher {
             display: flex;
-            gap: 10px;
             background: rgba(255, 255, 255, 0.05);
-            padding: 5px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
+            padding: 3px;
+            gap: 3px;
         }
 
         .lang-btn {
-            background: none;
+            background: transparent;
             border: none;
-            color: #aaa;
+            color: #a0a0a0;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
             cursor: pointer;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .lang-btn.active, .lang-btn:hover {
-            color: #38bdf8;
-        }
-
-        header.hero {
-            height: 100vh;
+            transition: all 0.3s;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            background: radial-gradient(circle at center, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
+            gap: 6px;
         }
 
-        .hero-badge {
-            background: rgba(56, 189, 248, 0.1);
-            color: #38bdf8;
-            padding: 8px 16px;
-            border-radius: 20px;
+        .lang-btn img {
+            width: 16px;
+            height: 12px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        .lang-btn.active {
+            background: #3bb6fc;
+            color: #0b0f0e;
+        }
+
+        .discord-btn-nav {
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
             font-size: 0.9rem;
-            margin-bottom: 20px;
-            border: 1px solid rgba(56, 189, 248, 0.2);
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
+        .discord-btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
         }
 
-        .hero h1 span {
-            color: #38bdf8;
+        #main-wrapper {
+            transition: opacity 0.3s ease;
         }
 
-        .hero p {
-            color: #aaa;
-            font-size: 1.1rem;
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 150px 80px 80px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
             max-width: 600px;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59, 182, 252, 0.1);
+            color: #3bb6fc;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid rgba(59, 182, 252, 0.2);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .hero-content h1 span {
+            color: #3bb6fc;
+        }
+
+        .hero-content p {
+            color: #a0a0a0;
+            font-size: 1.05rem;
+            line-height: 1.6;
             margin-bottom: 30px;
         }
 
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
         .btn-primary {
-            background: #38bdf8;
-            color: #0b0f19;
-            padding: 12px 28px;
-            border-radius: 8px;
+            background: #3bb6fc;
+            color: #0b0f0e;
+            padding: 14px 28px;
+            border-radius: 10px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(59, 182, 252, 0.3);
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            transition: background 0.3s, transform 0.2s;
+            gap: 8px;
         }
 
         .btn-primary:hover {
-            background: #0ea5e9;
+            background: #259ee0;
             transform: translateY(-2px);
         }
 
-        .offers-section {
-            padding: 100px 20px;
-            max-width: 1200px;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            width: 340px;
+            height: 340px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 25px rgba(59, 182, 252, 0.3));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .services-section {
+            padding: 80px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .section-title {
             text-align: center;
             font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 10px;
         }
 
         .section-subtitle {
             text-align: center;
-            color: #aaa;
-            margin-bottom: 60px;
+            color: #a0a0a0;
+            margin-bottom: 50px;
         }
 
-        .offers-grid {
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
         }
 
-        .offer-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 40px;
+        .service-card {
+            background: rgba(11, 15, 14, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 35px;
             border-radius: 16px;
             position: relative;
-            transition: border-color 0.3s, transform 0.3s;
+            transition: all 0.3s;
         }
 
-        .offer-card:hover {
-            border-color: rgba(56, 189, 248, 0.4);
+        .service-card.active-service {
+            border-color: rgba(59, 182, 252, 0.4);
+        }
+
+        .service-card.active-service:hover {
             transform: translateY(-5px);
+            border-color: #3bb6fc;
         }
 
-        .offer-card i {
-            font-size: 2.5rem;
-            color: #38bdf8;
+        .service-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge-open {
+            background: rgba(59, 182, 252, 0.15);
+            color: #3bb6fc;
+            border: 1px solid rgba(59, 182, 252, 0.3);
+        }
+
+        .service-card i {
+            font-size: 2.2rem;
+            color: #3bb6fc;
             margin-bottom: 20px;
         }
 
-        .offer-badge {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            background: rgba(56, 189, 248, 0.1);
-            color: #38bdf8;
-            padding: 5px 12px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            border: 1px solid rgba(56, 189, 248, 0.2);
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
-        .offer-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+        .service-card p {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        .offer-card p {
-            color: #aaa;
-            line-height: 1.6;
-        }
-
-        .reviews-section {
-            padding: 100px 0;
-            background: rgba(0, 0, 0, 0.2);
+        .testimonials-section {
+            padding: 80px 0;
             overflow: hidden;
+            position: relative;
         }
 
-        .testimonials-container {
+        .testimonials-slider {
             display: flex;
             gap: 30px;
             width: max-content;
-            animation: scrollTestimonials 40s linear infinite;
+            animation: scrollLeft 40s linear infinite;
         }
 
-        .testimonials-container:hover {
+        .testimonials-slider:hover {
             animation-play-state: paused;
         }
 
-        @keyframes scrollTestimonials {
+        @keyframes scrollLeft {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
 
         .testimonial-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(11, 15, 14, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             padding: 30px;
             border-radius: 16px;
-            width: 350px;
+            width: 360px;
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -293,131 +446,155 @@
         .stars {
             color: #f59e0b;
             margin-bottom: 15px;
-        }
-
-        .testimonial-text {
-            color: #ddd;
-            font-style: italic;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .testimonial-author {
-            color: #38bdf8;
-            font-weight: bold;
             font-size: 0.9rem;
         }
 
+        .testimonial-text {
+            color: #d1d5db;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: #3bb6fc;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .stats-section {
-            padding: 100px 20px;
-            max-width: 1200px;
+            padding: 80px;
+            max-width: 1400px;
             margin: 0 auto;
             text-align: center;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
-            margin-top: 40px;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 40px;
+            background: rgba(11, 15, 14, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 40px 30px;
             border-radius: 16px;
         }
 
         .stat-card i {
             font-size: 2.5rem;
-            color: #38bdf8;
-            margin-bottom: 15px;
+            color: #3bb6fc;
+            margin-bottom: 20px;
         }
 
         .stat-number {
             font-size: 2.5rem;
-            font-weight: bold;
+            font-weight: 800;
             color: #fff;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .stat-label {
-            color: #aaa;
+            color: #a0a0a0;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
-        .rules-section {
-            padding: 100px 20px;
-            max-width: 1200px;
+        #rules-wrapper {
+            display: none;
+            padding: 140px 80px 80px 80px;
+            max-width: 1500px;
             margin: 0 auto;
+        }
+
+        .rules-top-action {
+            margin-bottom: 30px;
         }
 
         .rules-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 40px;
         }
 
         .rule-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 40px;
+            background: rgba(11, 15, 14, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
+            padding: 40px;
+            max-height: 70vh;
+            overflow-y: auto;
         }
 
         .rule-box h2 {
-            color: #fff;
+            color: #3bb6fc;
             margin-bottom: 20px;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
 
         .rule-box pre {
             white-space: pre-wrap;
-            font-family: inherit;
-            color: #aaa;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #a0a0a0;
+            font-size: 0.95rem;
             line-height: 1.6;
         }
 
         footer {
-            background: rgba(5, 7, 12, 0.9);
+            background: rgba(8, 11, 10, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 80px 50px 30px;
+            padding: 60px 80px 30px 80px;
+            margin-top: 50px;
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
             gap: 40px;
-            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-brand-col img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            border-radius: 50%;
         }
 
         .footer-brand-title {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-weight: bold;
-            font-size: 1.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
             color: #fff;
             margin-bottom: 15px;
         }
 
-        .footer-brand-title img {
-            width: 40px;
-            height: 40px;
-        }
-
         .footer-brand-col p {
-            color: #aaa;
+            color: #888;
+            font-size: 0.9rem;
             line-height: 1.5;
+            max-width: 300px;
         }
 
         .footer-col h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
             color: #fff;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
             margin-bottom: 20px;
+            letter-spacing: 0.5px;
         }
 
         .footer-col ul {
@@ -427,65 +604,79 @@
             gap: 12px;
         }
 
-        .footer-col ul li a {
+        .footer-col ul a {
+            color: #888;
             text-decoration: none;
-            color: #aaa;
+            font-size: 0.9rem;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
-        .footer-col ul li a:hover {
-            color: #38bdf8;
+        .footer-col ul a:hover {
+            color: #3bb6fc;
         }
 
         .social-icons {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
 
         .social-icon-btn {
             width: 40px;
             height: 40px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
-            color: #fff;
+            color: #aaa;
             text-decoration: none;
-            transition: background 0.3s, color 0.3s;
+            transition: all 0.3s;
         }
 
         .social-icon-btn:hover {
-            background: #38bdf8;
-            color: #0b0f19;
+            background: #3bb6fc;
+            color: #0b0f0e;
+            border-color: #3bb6fc;
         }
 
         .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            max-width: 1400px;
+            margin: 30px auto 0 auto;
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
             display: flex;
-            justify-content: space-between;
-            color: #777;
-            font-size: 0.9rem;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .dev-credit span {
-            color: #38bdf8;
-            font-weight: bold;
+        .footer-bottom .dev-credit {
+            color: #888;
+            font-size: 0.8rem;
         }
 
-        @media (max-width: 900px) {
-            .footer-content {
+        .footer-bottom .dev-credit span {
+            color: #3bb6fc;
+            font-weight: 600;
+        }
+
+        @media (max-width: 968px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 120px;
+                gap: 50px;
+            }
+            .services-grid, .footer-content, .rules-grid {
                 grid-template-columns: 1fr;
-                gap: 30px;
+            }
+            .nav-links {
+                display: none;
             }
             nav {
-                padding: 20px;
-            }
-            .hero h1 {
-                font-size: 2.5rem;
+                padding: 20px 30px;
             }
         }
     </style>
@@ -494,224 +685,282 @@
 
     <div id="intro-screen">
         <div class="intro-content">
-            <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo">
-            <h1 data-tr="loading">Ładowanie zawartości...</h1>
+            <div class="intro-logo">ICE<span>CODE</span></div>
+            <div class="loading-text" data-tr="loading">Ładowanie zawartości...</div>
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
         </div>
     </div>
 
     <nav>
-        <a href="#top" class="logo">
+        <a href="#" class="nav-brand" onclick="showMain(event)">
             <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo">
             ICECODE
         </a>
         <ul class="nav-links">
-            <li><a href="#top" class="nav-link" data-tr="nav_home">Strona główna</a></li>
-            <li><a href="#oferty" class="nav-link" data-tr="nav_offers">Nasze Oferty</a></li>
-            <li><a href="#opinie" class="nav-link" data-tr="nav_reviews">Opinie</a></li>
-            <li><a href="#statystyki" class="nav-link" data-tr="nav_stats">Statystyki</a></li>
-            <li><a href="#regulaminy" class="nav-link" data-tr="nav_rules">Regulaminy</a></li>
-            <li>
-                <div class="lang-switcher">
-                    <button class="lang-btn active" onclick="setLanguage('pl')">PL</button>
-                    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
-                </div>
-            </li>
+            <li><a onclick="showMain(event)" class="active" data-tr="nav_home">Strona główna</a></li>
+            <li><a href="#oferty" data-tr="nav_offers">Nasze Oferty</a></li>
+            <li><a href="#opinie" data-tr="nav_reviews">Opinie</a></li>
+            <li><a onclick="toggleRules(event)" style="color: #3bb6fc; font-weight: 700;" data-tr="nav_rules">Regulaminy</a></li>
         </ul>
+        <div class="nav-actions">
+            <div class="lang-switcher">
+                <button class="lang-btn active" onclick="setLanguage('pl')">PL <img src="https://flagcdn.com/w20/pl.png" alt="Flaga PL"></button>
+                <button class="lang-btn" onclick="setLanguage('en')">EN <img src="https://flagcdn.com/w20/gb.png" alt="Flaga EN"></button>
+            </div>
+            <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="discord-btn-nav" data-tr="nav_discord">Dołącz na Discord</a>
+        </div>
     </nav>
 
-    <header class="hero" id="top">
-        <div class="hero-badge" data-tr="hero_tag">ICECODE - Sezon 1</div>
-        <h1 data-tr="hero_title">Tworzymy Przyszłość<br><span>Twojego Serwera</span></h1>
-        <p data-tr="hero_desc">Zaawansowane boty Discord, unikalne grafiki, strony WWW oraz profesjonalne wsparcie dla Twojego projektu!</p>
-        <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> <span data-tr="btn_discord">Dołącz na Discord</span></a>
-    </header>
-
-    <section class="offers-section" id="oferty">
-        <h2 class="section-title" data-tr="offers_title">Nasze Oferty</h2>
-        <p class="section-subtitle" data-tr="offers_subtitle">Sprawdź co możemy dla Ciebie wykonać</p>
-        
-        <div class="offers-grid">
-            <div class="offer-card">
-                <div class="offer-badge" data-tr="badge_open">OTWARTE</div>
-                <i class="fa-solid fa-robot"></i>
-                <h3 data-tr="s1_title">Boty Discord</h3>
-                <p data-tr="s1_desc">Zaawansowane boty integracyjne, systemy weryfikacji, tickety i moderacja dla Twojej społeczności.</p>
+    <div id="main-wrapper">
+        <header>
+            <div class="hero-content">
+                <div class="hero-tag">
+                    <i class="fa-solid fa-fire"></i> <span data-tr="hero_tag">ICECODE.PL – Profesjonalne usługi</span>
+                </div>
+                <h1 data-tr="hero_title">Tworzymy Przyszłość<br><span>Twojego Serwera</span></h1>
+                <p data-tr="hero_desc">Zaawansowane boty Discord, unikalne grafiki, strony WWW oraz profesjonalne wsparcie dla Twojego projektu!</p>
+                <div class="hero-buttons">
+                    <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> <span data-tr="btn_discord">Dołącz na Discord</span></a>
+                    <a href="https://tipply.pl/@xW0JTI" target="_blank" class="btn-secondary"><i class="fas fa-hand-holding-dollar"></i> Tipply</a>
+                </div>
             </div>
-
-            <div class="offer-card">
-                <div class="offer-badge" data-tr="badge_open">OTWARTE</div>
-                <i class="fa-solid fa-code"></i>
-                <h3 data-tr="s2_title">Strony WWW</h3>
-                <p data-tr="s2_desc">Nowoczesne strony internetowe, panele oraz sklepy dostosowane pod Twoje wymagania.</p>
+            <div class="hero-image">
+                <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo">
             </div>
+        </header>
 
-            <div class="offer-card">
-                <div class="offer-badge" data-tr="badge_open">OTWARTE</div>
-                <i class="fa-solid fa-paintbrush"></i>
-                <h3 data-tr="s3_title">Grafiki</h3>
-                <p data-tr="s3_desc">Profesjonalne grafiki użytkowe, banery promocyjne, logotypy i oprawy wizualne.</p>
-            </div>
+        <section class="services-section" id="oferty">
+            <h2 class="section-title" data-tr="offers_title">Nasze Oferty</h2>
+            <p class="section-subtitle" data-tr="offers_subtitle">Sprawdź co możemy dla Ciebie wykonać</p>
+            
+            <div class="services-grid">
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
+                    <i class="fa-brands fa-discord"></i>
+                    <h3 data-tr="s1_title">Boty Discord</h3>
+                    <p data-tr="s1_desc">Zaawansowane boty integracyjne, systemy weryfikacji, tickety i moderacja dla Twojej społeczności.</p>
+                </div>
 
-            <div class="offer-card">
-                <div class="offer-badge" data-tr="badge_open">OTWARTE</div>
-                <i class="fa-solid fa-map"></i>
-                <h3 data-tr="s4_title">Autorskie Mapy</h3>
-                <p data-tr="s4_desc">Unikalne i zoptymalizowane mapy pod tryby typu EasyHC, Survival, czy minigry.</p>
-            </div>
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
+                    <i class="fa-solid fa-globe"></i>
+                    <h3 data-tr="s2_title">Strony WWW</h3>
+                    <p data-tr="s2_desc">Nowoczesne strony internetowe, panele oraz sklepy dostosowane pod Twoje wymagania.</p>
+                </div>
 
-            <div class="offer-card">
-                <div class="offer-badge" data-tr="badge_open">OTWARTE</div>
-                <i class="fa-solid fa-box-archive"></i>
-                <h3 data-tr="s5_title">Paczki Trybów</h3>
-                <p data-tr="s5_desc">W pełni skonfigurowane paczki serwerowe gotowe do uruchomienia od zaraz.</p>
-            </div>
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
+                    <i class="fa-solid fa-paintbrush"></i>
+                    <h3 data-tr="s3_title">Grafika i Design</h3>
+                    <p data-tr="s3_desc">Profesjonalne grafiki użytkowe, banery promocyjne, logotypy i oprawy wizualne.</p>
+                </div>
 
-            <div class="offer-card">
-                <div class="offer-badge" data-tr="badge_open">OTWARTE</div>
-                <i class="fa-solid fa-terminal"></i>
-                <h3 data-tr="s6_title">Pluginy i Skrypty</h3>
-                <p data-tr="s6_desc">Dedykowane rozwiązania zwiększające funkcjonalność i wydajność serwera.</p>
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
+                    <i class="fa-solid fa-map"></i>
+                    <h3 data-tr="s4_title">Autorskie Mapy</h3>
+                    <p data-tr="s4_desc">Unikalne i zoptymalizowane mapy pod tryby typu EasyHC, Survival, czy minigry.</p>
+                </div>
+
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
+                    <i class="fa-solid fa-box-archive"></i>
+                    <h3 data-tr="s5_title">Paczki Trybów</h3>
+                    <p data-tr="s5_desc">W pełni skonfigurowane paczki serwerowe gotowe do uruchomienia od zaraz.</p>
+                </div>
+
+                <div class="service-card active-service">
+                    <span class="service-badge badge-open" data-tr="badge_open">OTWARTE</span>
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                    <h3 data-tr="s6_title">Pluginy i Skrypty</h3>
+                    <p data-tr="s6_desc">Dedykowane rozwiązania zwiększające funkcjonalność i wydajność serwera.</p>
+                </div>
             </div>
+        </section>
+
+        <section class="testimonials-section" id="opinie">
+            <h2 class="section-title" style="margin-bottom: 10px;" data-tr="reviews_title">Zaufali Nam</h2>
+            <p class="section-subtitle" style="margin-bottom: 40px;" data-tr="reviews_subtitle">Opinie zadowolonych klientów z naszego serwera Discord</p>
+
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"IcEcOdE on top."</p>
+                    </div>
+                    <div class="testimonial-author">Itzz_L4L1Vex66</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Piękne grafiki 🤖"</p>
+                    </div>
+                    <div class="testimonial-author">Grzesiek [DEV]</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"grafiki takie piekne ze tak sie oplacalo polecam"</p>
+                    </div>
+                    <div class="testimonial-author">qvh</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Zarambisty skinek tak mi sie spodobal i innym ze 40 innych osob zaczelo go nosic naprawdę szacunek wojtek ❤️ zajebsity skinek i grafiki"</p>
+                    </div>
+                    <div class="testimonial-author">!_chyba_szymek!</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Szczerze powiem bez zamulania prosto z serca odkryłem tego typka... opinia jest jednoznaczna: KOGA KOSZTOWALO TYLE CO 1 LIZAK W SKLEPIE"</p>
+                    </div>
+                    <div class="testimonial-author">Usunięty Użytkownik</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni 🏆"</p>
+                    </div>
+                    <div class="testimonial-author">Chlebek [SUPPORT]</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"legit server zakupilem bota i strefę premium"</p>
+                    </div>
+                    <div class="testimonial-author">szhakal_</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"zajebistye embedy polecam"</p>
+                    </div>
+                    <div class="testimonial-author">XENONQ</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Oczywiście premium i embed zajebista robota 🧊 on top"</p>
+                    </div>
+                    <div class="testimonial-author">DEMONI</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Legit bot dc najlepszy jakiego widziałem"</p>
+                    </div>
+                    <div class="testimonial-author">Blackweeed</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"IcEcOdE on top."</p>
+                    </div>
+                    <div class="testimonial-author">Itzz_L4L1Vex66</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Piękne grafiki 🤖"</p>
+                    </div>
+                    <div class="testimonial-author">Grzesiek [DEV]</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"grafiki takie piekne ze tak sie oplacalo polecam"</p>
+                    </div>
+                    <div class="testimonial-author">qvh</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Zarambisty skinek tak mi sie spodobal i innym ze 40 innych osob zaczelo go nosic naprawdę szacunek wojtek ❤️"</p>
+                    </div>
+                    <div class="testimonial-author">!_chyba_szymek!</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni 🏆"</p>
+                    </div>
+                    <div class="testimonial-author">Chlebek [SUPPORT]</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"legit server zakupilem bota i strefę premium"</p>
+                    </div>
+                    <div class="testimonial-author">szhakal_</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"zajebistye embedy polecam"</p>
+                    </div>
+                    <div class="testimonial-author">XENONQ</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Oczywiście premium i embed zajebista robota 🧊 on top"</p>
+                    </div>
+                    <div class="testimonial-author">DEMONI</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Legit bot dc najlepszy jakiego widziałem"</p>
+                    </div>
+                    <div class="testimonial-author">Blackweeed</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section" id="statystyki">
+            <h2 class="section-title" style="margin-bottom: 10px;" data-tr="stats_title">Statystyki</h2>
+            <p class="section-subtitle" data-tr="stats_subtitle">Sprawdzone i zweryfikowane dane</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fa-solid fa-shield-check"></i>
+                    <div class="stat-number">55+</div>
+                    <div class="stat-label" data-tr="stat_legits">Legitchecki</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-users"></i>
+                    <div class="stat-number">300+</div>
+                    <div class="stat-label" data-tr="stat_users">Osób na Discordzie</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="rules-wrapper">
+        <div class="rules-top-action">
+            <a href="#" onclick="showMain(event)" class="btn-primary"><i class="fa-solid fa-arrow-left"></i> <span data-tr="back_home">Powrót na stronę główną</span></a>
         </div>
-    </section>
-
-    <section class="reviews-section" id="opinie">
-        <h2 class="section-title" style="margin-bottom: 10px;" data-tr="reviews_title">Zaufali Nam</h2>
-        <p class="section-subtitle" data-tr="reviews_subtitle">Opinie zadowolonych klientów z naszego serwera Discord</p>
-        
-        <div class="testimonials-container">
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni 🏆"</p>
-                </div>
-                <div class="testimonial-author">Chlebek [SUPPORT]</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"legit server zakupilem bota i strefę premium"</p>
-                </div>
-                <div class="testimonial-author">szhakal_</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"zajebistye embedy polecam"</p>
-                </div>
-                <div class="testimonial-author">XENONQ</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"Oczywiście premium i embed zajebista robota 🧊 on top"</p>
-                </div>
-                <div class="testimonial-author">DEMONI</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"Legit bot dc najlepszy jakiego widziałem"</p>
-                </div>
-                <div class="testimonial-author">Blackweeed</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"IcEcOdE on top."</p>
-                </div>
-                <div class="testimonial-author">Itzz_L4L1Vex66</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"Piękne grafiki 🤖"</p>
-                </div>
-                <div class="testimonial-author">Grzesiek [DEV]</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"grafiki takie piekne ze tak sie oplacalo polecam"</p>
-                </div>
-                <div class="testimonial-author">qvh</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"Zarambisty skinek tak mi sie spodobal i innym ze 40 innych osob zaczelo go nosic naprawdę szacunek wojtek ❤️"</p>
-                </div>
-                <div class="testimonial-author">!_chyba_szymek!</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"Legit Serwer Idealny najlepszy Code Zakupiłem Bota / poprawki serwerowe / promocja serwera na 14dni 🏆"</p>
-                </div>
-                <div class="testimonial-author">Chlebek [SUPPORT]</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"legit server zakupilem bota i strefę premium"</p>
-                </div>
-                <div class="testimonial-author">szhakal_</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"zajebistye embedy polecam"</p>
-                </div>
-                <div class="testimonial-author">XENONQ</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"Oczywiście premium i embed zajebista robota 🧊 on top"</p>
-                </div>
-                <div class="testimonial-author">DEMONI</div>
-            </div>
-
-            <div class="testimonial-card">
-                <div>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="testimonial-text">"Legit bot dc najlepszy jakiego widziałem"</p>
-                </div>
-                <div class="testimonial-author">Blackweeed</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="stats-section" id="statystyki">
-        <h2 class="section-title" style="margin-bottom: 10px;" data-tr="stats_title">Statystyki</h2>
-        <p class="section-subtitle" data-tr="stats_subtitle">Sprawdzone i zweryfikowane dane</p>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <i class="fa-solid fa-shield-check"></i>
-                <div class="stat-number">55+</div>
-                <div class="stat-label" data-tr="stat_legits">Legitchecki</div>
-            </div>
-            <div class="stat-card">
-                <i class="fa-solid fa-users"></i>
-                <div class="stat-number">300+</div>
-                <div class="stat-label" data-tr="stat_users">Osób na Discordzie</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="rules-section" id="regulaminy">
         <div class="rules-grid">
             <div class="rule-box">
                 <h2 data-tr="rules_discord_title">Regulamin Serwera Discord</h2>
@@ -829,7 +1078,7 @@ Brak znajomości niniejszego regulaminu nie zwalnia z obowiązku jego przestrzeg
 Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             </div>
         </div>
-    </section>
+    </div>
 
     <footer>
         <div class="footer-content">
@@ -843,7 +1092,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             <div class="footer-col">
                 <h4 data-tr="footer_links">SZYBKIE LINKI</h4>
                 <ul>
-                    <li><a href="#top" data-tr="nav_home">Strona główna</a></li>
+                    <li><a onclick="showMain(event)" data-tr="nav_home">Strona główna</a></li>
                     <li><a href="#oferty" data-tr="nav_offers">Nasze Oferty</a></li>
                     <li><a href="#opinie" data-tr="nav_reviews">Opinie</a></li>
                 </ul>
@@ -851,7 +1100,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             <div class="footer-col">
                 <h4 data-tr="footer_legal">INFORMACJE PRAWNE</h4>
                 <ul>
-                    <li><a href="#regulaminy" data-tr="nav_rules">Regulaminy</a></li>
+                    <li><a onclick="toggleRules(event)" data-tr="nav_rules">Regulaminy</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -870,10 +1119,12 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
     </footer>
 
     <script>
+        // Blokada prawego przycisku myszy
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
 
+        // Blokada skrótów klawiszowych (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
         document.addEventListener('keydown', function(e) {
             if (
                 e.key === 'F12' || 
@@ -891,10 +1142,9 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 nav_home: "Strona główna",
                 nav_offers: "Nasze Oferty",
                 nav_reviews: "Opinie",
-                nav_stats: "Statystyki",
                 nav_rules: "Regulaminy",
                 nav_discord: "Dołącz na Discord",
-                hero_tag: "ICECODE - Sezon 1",
+                hero_tag: "ICECODE.PL – Profesjonalne usługi",
                 hero_title: "Tworzymy Przyszłość<br><span>Twojego Serwera</span>",
                 hero_desc: "Zaawansowane boty Discord, unikalne grafiki, strony WWW oraz profesjonalne wsparcie dla Twojego projektu!",
                 btn_discord: "Dołącz na Discord",
@@ -905,7 +1155,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 s1_desc: "Zaawansowane boty integracyjne, systemy weryfikacji, tickety i moderacja dla Twojej społeczności.",
                 s2_title: "Strony WWW",
                 s2_desc: "Nowoczesne strony internetowe, panele oraz sklepy dostosowane pod Twoje wymagania.",
-                s3_title: "Grafiki",
+                s3_title: "Grafika i Design",
                 s3_desc: "Profesjonalne grafiki użytkowe, banery promocyjne, logotypy i oprawy wizualne.",
                 s4_title: "Autorskie Mapy",
                 s4_desc: "Unikalne i zoptymalizowane mapy pod tryby typu EasyHC, Survival, czy minigry.",
@@ -919,6 +1169,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 stats_subtitle: "Sprawdzone i zweryfikowane dane",
                 stat_legits: "Legitchecki",
                 stat_users: "Osób na Discordzie",
+                back_home: "Powrót na stronę główną",
                 rules_discord_title: "Regulamin Serwera Discord",
                 rules_payment_title: "Regulamin Płatności",
                 footer_desc: "Profesjonalne rozwiązania dla serwerów i społeczności.",
@@ -932,10 +1183,9 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 nav_home: "Home",
                 nav_offers: "Our Offers",
                 nav_reviews: "Reviews",
-                nav_stats: "Statistics",
                 nav_rules: "Rules",
                 nav_discord: "Join Discord",
-                hero_tag: "ICECODE - Season 1",
+                hero_tag: "ICECODE.PL – Professional Services",
                 hero_title: "Building the Future<br><span>Of Your Server</span>",
                 hero_desc: "Advanced Discord bots, unique graphics, websites and professional support for your project!",
                 btn_discord: "Join Discord",
@@ -946,7 +1196,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 s1_desc: "Advanced integration bots, verification systems, tickets and moderation for your community.",
                 s2_title: "Websites",
                 s2_desc: "Modern websites, control panels, and stores tailored to your requirements.",
-                s3_title: "Graphics",
+                s3_title: "Graphics & Design",
                 s3_desc: "Professional utility graphics, promotional banners, logos, and visual assets.",
                 s4_title: "Custom Maps",
                 s4_desc: "Unique and optimized maps for EasyHC, Survival, or minigames modes.",
@@ -960,6 +1210,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 stats_subtitle: "Checked and verified data",
                 stat_legits: "Legitchecks",
                 stat_users: "Discord Members",
+                back_home: "Back to Home",
                 rules_discord_title: "Discord Server Rules",
                 rules_payment_title: "Payment Terms",
                 footer_desc: "Professional solutions for servers and communities.",
@@ -989,33 +1240,27 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             }, 3200);
         });
 
-        // Tylko dodany skrypt podświetlania aktywnej zakładki (ScrollSpy)
-        window.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('header.hero, section');
-            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+        function toggleRules(e) {
+            e.preventDefault();
+            const mainWrapper = document.getElementById('main-wrapper');
+            const rulesWrapper = document.getElementById('rules-wrapper');
 
-            function changeNavOnScroll() {
-                let scrollPos = window.scrollY + 200;
-
-                sections.forEach(section => {
-                    const top = section.offsetTop;
-                    const height = section.offsetHeight;
-                    const id = section.getAttribute('id');
-
-                    if (scrollPos >= top && scrollPos < top + height) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active-link');
-                            if (link.getAttribute('href') === '#' + id) {
-                                link.classList.add('active-link');
-                            }
-                        });
-                    }
-                });
+            if (rulesWrapper.style.display === 'block') {
+                rulesWrapper.style.display = 'none';
+                mainWrapper.style.display = 'block';
+            } else {
+                mainWrapper.style.display = 'none';
+                rulesWrapper.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
+        }
 
-            window.addEventListener('scroll', changeNavOnScroll);
-            changeNavOnScroll();
-        });
+        function showMain(e) {
+            e.preventDefault();
+            document.getElementById('rules-wrapper').style.display = 'none';
+            document.getElementById('main-wrapper').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     </script>
 </body>
 </html>
