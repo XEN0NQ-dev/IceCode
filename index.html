@@ -107,7 +107,9 @@
             cursor: pointer;
         }
 
-        .nav-links a:hover {
+        /* Klasa dla aktywnego elementu w menu (zmienia kolor na niebieski) */
+        .nav-links a:hover,
+        .nav-links a.active-link {
             color: #38bdf8;
         }
 
@@ -512,11 +514,11 @@
             ICECODE
         </a>
         <ul class="nav-links">
-            <li><a href="#" class="nav-link" data-target="top" data-tr="nav_home">Strona główna</a></li>
-            <li><a href="#oferty" class="nav-link" data-target="oferty" data-tr="nav_offers">Nasze Oferty</a></li>
-            <li><a href="#opinie" class="nav-link" data-target="opinie" data-tr="nav_reviews">Opinie</a></li>
-            <li><a href="#statystyki" class="nav-link" data-target="statystyki" data-tr="nav_stats">Statystyki</a></li>
-            <li><a href="#regulaminy" class="nav-link" data-target="regulaminy" data-tr="nav_rules">Regulaminy</a></li>
+            <li><a href="#top" class="nav-link" data-tr="nav_home">Strona główna</a></li>
+            <li><a href="#oferty" class="nav-link" data-tr="nav_offers">Nasze Oferty</a></li>
+            <li><a href="#opinie" class="nav-link" data-tr="nav_reviews">Opinie</a></li>
+            <li><a href="#statystyki" class="nav-link" data-tr="nav_stats">Statystyki</a></li>
+            <li><a href="#regulaminy" class="nav-link" data-tr="nav_rules">Regulaminy</a></li>
             <li>
                 <div class="lang-switcher">
                     <button class="lang-btn active" onclick="setLanguage('pl')">PL</button>
@@ -858,15 +860,15 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             <div class="footer-col">
                 <h4 data-tr="footer_links">SZYBKIE LINKI</h4>
                 <ul>
-                    <li><a href="#" class="nav-link" data-target="top" data-tr="nav_home">Strona główna</a></li>
-                    <li><a href="#oferty" class="nav-link" data-target="oferty" data-tr="nav_offers">Nasze Oferty</a></li>
-                    <li><a href="#opinie" class="nav-link" data-target="opinie" data-tr="nav_reviews">Opinie</a></li>
+                    <li><a href="#top" data-tr="nav_home">Strona główna</a></li>
+                    <li><a href="#oferty" data-tr="nav_offers">Nasze Oferty</a></li>
+                    <li><a href="#opinie" data-tr="nav_reviews">Opinie</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4 data-tr="footer_legal">INFORMACJE PRAWNE</h4>
                 <ul>
-                    <li><a href="#regulaminy" class="nav-link" data-target="regulaminy" data-tr="nav_rules">Regulaminy</a></li>
+                    <li><a href="#regulaminy" data-tr="nav_rules">Regulaminy</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -1007,50 +1009,32 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             }, 3200);
         });
 
-        // Dynamiczne podświetlanie aktywnego segmentu w menu (ScrollSpy)
+        // Automatyczne podświetlanie aktywnej sekcji podczas przewijania (ScrollSpy)
         window.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('header, section');
-            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('header.hero, section');
+            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
 
-            window.addEventListener('scroll', () => {
-                let current = '';
-                const scrollY = window.pageYOffset;
+            function changeNavOnScroll() {
+                let scrollPos = window.scrollY + 200;
 
                 sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 150;
-                    const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
+                    const top = section.offsetTop;
+                    const height = section.offsetHeight;
+                    const id = section.getAttribute('id');
 
-                    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                        current = sectionId;
+                    if (scrollPos >= top && scrollPos < top + height) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active-link');
+                            if (link.getAttribute('href') === '#' + id) {
+                                link.classList.add('active-link');
+                            }
+                        });
                     }
                 });
+            }
 
-                navLinks.forEach(link => {
-                    link.style.color = ''; // Reset koloru
-                    const target = link.getAttribute('href').substring(1);
-                    if (target === current || (current === '' && target === 'top')) {
-                        link.style.color = '#38bdf8'; // Niebieski kolor aktywnego segmentu
-                    }
-                });
-            });
-
-            // Obsługa płynnego przewijania i natychmiastowego podświetlenia po kliknięciu
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    if(href.startsWith('#')) {
-                        e.preventDefault();
-                        const targetId = href.substring(1);
-                        const targetElement = document.getElementById(targetId);
-                        if(targetElement) {
-                            targetElement.scrollIntoView({ behavior: 'smooth' });
-                        }
-                        navLinks.forEach(l => l.style.color = '');
-                        this.style.color = '#38bdf8';
-                    }
-                });
-            });
+            window.addEventListener('scroll', changeNavOnScroll);
+            changeNavOnScroll(); // wywołanie na start
         });
     </script>
 </body>
