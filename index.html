@@ -29,6 +29,7 @@
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         /* Intro Screen */
@@ -111,7 +112,7 @@
             cursor: pointer;
         }
 
-        nav a:hover {
+        nav a:hover, nav a.active {
             color: var(--accent-color);
         }
 
@@ -321,22 +322,12 @@
             color: var(--text-muted);
         }
 
-        /* Rules Wrapper */
-        #rules-wrapper {
-            display: none;
-            padding: 50px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .rules-top-action {
-            margin-bottom: 30px;
-        }
-
+        /* Rules Section (zintegrowana na dole) */
         .rules-grid {
             display: flex;
             flex-direction: column;
             gap: 30px;
+            margin-top: 40px;
         }
 
         .rule-box {
@@ -477,16 +468,17 @@
 
     <div id="main-wrapper">
         <header>
-            <a href="#" onclick="showMain(event)" class="logo">
+            <a href="#home" class="logo nav-link">
                 <img src="https://imgur.com/6ugLZay.png" alt="ICECODE Logo">
                 ICECODE <span style="font-size: 0.8rem; color: var(--accent-color); background: rgba(56,189,248,0.1); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(56,189,248,0.2);">SEZON 1</span>
             </a>
             <nav>
                 <ul>
-                    <li><a onclick="showMain(event)" data-tr="nav_home">Strona główna</a></li>
-                    <li><a href="#oferty" data-tr="nav_offers">Nasze Oferty</a></li>
-                    <li><a href="#opinie" data-tr="nav_reviews">Opinie</a></li>
-                    <li><a onclick="toggleRules(event)" data-tr="nav_rules">Regulaminy</a></li>
+                    <li><a href="#home" class="nav-link active" data-tr="nav_home">Strona główna</a></li>
+                    <li><a href="#oferty" class="nav-link" data-tr="nav_offers">Nasze Oferty</a></li>
+                    <li><a href="#opinie" class="nav-link" data-tr="nav_reviews">Opinie</a></li>
+                    <li><a href="#statystyki" class="nav-link" data-tr="stats_title">Statystyki</a></li>
+                    <li><a href="#regulaminy" class="nav-link" data-tr="nav_rules">Regulaminy</a></li>
                     <li>
                         <div class="lang-switcher">
                             <button class="lang-btn active" onclick="setLanguage('pl')">PL</button>
@@ -497,8 +489,8 @@
             </nav>
         </header>
 
-        <section class="hero">
-            <div class="hero-tag" data-tr="hero_tag">ICECODE.PL – Profesjonalne usługi (Sezon 1)</div>
+        <section id="home" class="hero">
+            <div class="hero-tag" data-tr="hero_tag">ICECODE - Sezon 1</div>
             <h1 data-tr="hero_title">Tworzymy Przyszłość<br><span>Twojego Serwera</span></h1>
             <p data-tr="hero_desc">Zaawansowane boty Discord, unikalne grafiki, strony WWW oraz profesjonalne wsparcie dla Twojego projektu!</p>
             <a href="https://discord.gg/BTa3JuCjGD" target="_blank" class="btn-primary">
@@ -619,16 +611,14 @@
                 </div>
             </div>
         </section>
-    </div>
 
-    <div id="rules-wrapper">
-        <div class="rules-top-action">
-            <a href="#" onclick="showMain(event)" class="btn-primary"><i class="fa-solid fa-arrow-left"></i> <span data-tr="back_home">Powrót na stronę główną</span></a>
-        </div>
-        <div class="rules-grid">
-            <div class="rule-box">
-                <h2 data-tr="rules_discord_title">Regulamin Serwera Discord</h2>
-                <pre data-tr="rules_discord_content">ICECODE - Regulamin Serwera Discord
+        <section class="section" id="regulaminy">
+            <h2 class="section-title" data-tr="nav_rules">Regulaminy</h2>
+            <p class="section-subtitle">Zapoznaj się z zasadami panującymi na serwerze i przy zakupach</p>
+            <div class="rules-grid">
+                <div class="rule-box">
+                    <h2 data-tr="rules_discord_title">Regulamin Serwera Discord</h2>
+                    <pre data-tr="rules_discord_content">ICECODE - Regulamin Serwera Discord
 Nieznajomość regulaminu nie zwalnia z obowiązku jego przestrzegania. Dołączając do serwera Discord ICECODE.PL, automatycznie akceptujesz wszystkie poniższe zasady.
 
 §1. Kultura i szacunek
@@ -686,11 +676,11 @@ Nieznajomość regulaminu nie zwalnia z obowiązku jego przestrzegania. Dołącz
 - Regulamin może zostać zmieniony w dowolnym momencie bez wcześniejszego powiadomienia użytkowników.
 - Korzystanie z serwera po wprowadzeniu zmian oznacza ich akceptację.
 - W sprawach nieuregulowanych niniejszym regulaminem decyzję podejmuje administracja serwera.</pre>
-            </div>
+                </div>
 
-            <div class="rule-box">
-                <h2 data-tr="rules_payment_title">Regulamin Płatności</h2>
-                <pre data-tr="rules_payment_content">ICECODE - Regulamin Płatności
+                <div class="rule-box">
+                    <h2 data-tr="rules_payment_title">Regulamin Płatności</h2>
+                    <pre data-tr="rules_payment_content">ICECODE - Regulamin Płatności
 Brak znajomości niniejszego regulaminu nie zwalnia z obowiązku jego przestrzegania. Korzystając z usług ICECODE oraz składając zamówienie, klient potwierdza zapoznanie się z jego treścią i akceptuje wszystkie zawarte w nim postanowienia.
 
 §1. Zwroty i odstąpienie od umowy
@@ -720,7 +710,7 @@ Brak znajomości niniejszego regulaminu nie zwalnia z obowiązku jego przestrzeg
 - Po upływie 30 dni od zakończenia realizacji wszelkie poprawki, aktualizacje lub modyfikacje są traktowane jako usługa dodatkowa i mogą podlegać opłacie.
 
 §7. Rozwiązywanie sporów
-- Wykonawca nie jest zobowiązany do uczestnictwa w pozasądowych procedurach rozwiązywania sporów konsumenckich (ADR/ODR), chyba że wymagają tego obowiązujące przepisy prawa.
+- Wykonawca nie jest zobowiązany do uczestnictivity w pozasądowych procedurach rozwiązywania sporów konsumenckich (ADR/ODR), chyba że wymagają tego obowiązujące przepisy prawa.
 
 §8. Płatności
 - Płatność za usługę stanowi wynagrodzenie za wykonanie zamówionego projektu.
@@ -740,8 +730,9 @@ Brak znajomości niniejszego regulaminu nie zwalnia z obowiązku jego przestrzeg
 
 §12. Dostępne metody płatności:
 Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
 
     <footer>
@@ -756,7 +747,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             <div class="footer-col">
                 <h4 data-tr="footer_links">SZYBKIE LINKI</h4>
                 <ul>
-                    <li><a onclick="showMain(event)" data-tr="nav_home">Strona główna</a></li>
+                    <li><a href="#home" data-tr="nav_home">Strona główna</a></li>
                     <li><a href="#oferty" data-tr="nav_offers">Nasze Oferty</a></li>
                     <li><a href="#opinie" data-tr="nav_reviews">Opinie</a></li>
                 </ul>
@@ -764,7 +755,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             <div class="footer-col">
                 <h4 data-tr="footer_legal">INFORMACJE PRAWNE</h4>
                 <ul>
-                    <li><a onclick="toggleRules(event)" data-tr="nav_rules">Regulaminy</a></li>
+                    <li><a href="#regulaminy" data-tr="nav_rules">Regulaminy</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -806,7 +797,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 nav_reviews: "Opinie",
                 nav_rules: "Regulaminy",
                 nav_discord: "Dołącz na Discord",
-                hero_tag: "ICECODE.PL – Profesjonalne usługi (Sezon 1)",
+                hero_tag: "ICECODE - Sezon 1",
                 hero_title: "Tworzymy Przyszłość<br><span>Twojego Serwera</span>",
                 hero_desc: "Zaawansowane boty Discord, unikalne grafiki, strony WWW oraz profesjonalne wsparcie dla Twojego projektu!",
                 btn_discord: "Dołącz na Discord",
@@ -822,7 +813,6 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 s4_title: "Autorskie Mapy",
                 s4_desc: "Unikalne i zoptymalizowane mapy pod tryby typu EasyHC, Survival, czy minigry.",
                 s5_title: "Paczki Trybów",
-                s5_title_card: "Paczki Trybów",
                 s5_desc: "W pełni skonfigurowane paczki serwerowe gotowe do uruchomienia od zaraz.",
                 s6_title: "Pluginy i Skrypty",
                 s6_desc: "Dedykowane rozwiązania zwiększające funkcjonalność i wydajność serwera.",
@@ -832,7 +822,6 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 stats_subtitle: "Sprawdzone i zweryfikowane dane",
                 stat_legits: "Legitchecki",
                 stat_users: "Osób na Discordzie",
-                back_home: "Powrót na stronę główną",
                 rules_discord_title: "Regulamin Serwera Discord",
                 rules_payment_title: "Regulamin Płatności",
                 footer_desc: "Profesjonalne rozwiązania dla serwerów i społeczności.",
@@ -848,7 +837,7 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 nav_reviews: "Reviews",
                 nav_rules: "Rules",
                 nav_discord: "Join Discord",
-                hero_tag: "ICECODE.PL – Professional Services (Season 1)",
+                hero_tag: "ICECODE - Season 1",
                 hero_title: "Building the Future<br><span>Of Your Server</span>",
                 hero_desc: "Advanced Discord bots, unique graphics, websites and professional support for your project!",
                 btn_discord: "Join Discord",
@@ -873,7 +862,6 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
                 stats_subtitle: "Checked and verified data",
                 stat_legits: "Legitchecks",
                 stat_users: "Discord Members",
-                back_home: "Back to Home",
                 rules_discord_title: "Discord Server Rules",
                 rules_payment_title: "Payment Terms",
                 footer_desc: "Professional solutions for servers and communities.",
@@ -903,27 +891,27 @@ Kod BLIK, Przelew, PaySafeCard i PayPal</pre>
             }, 3200);
         });
 
-        function toggleRules(e) {
-            e.preventDefault();
-            const mainWrapper = document.getElementById('main-wrapper');
-            const rulesWrapper = document.getElementById('rules-wrapper');
+        // Dynamiczne podświetlanie aktywnego segmentu w menu podczas przewijania strony
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav ul li a.nav-link');
 
-            if (rulesWrapper.style.display === 'block') {
-                rulesWrapper.style.display = 'none';
-                mainWrapper.style.display = 'block';
-            } else {
-                mainWrapper.style.display = 'none';
-                rulesWrapper.style.display = 'block';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
 
-        function showMain(e) {
-            e.preventDefault();
-            document.getElementById('rules-wrapper').style.display = 'none';
-            document.getElementById('main-wrapper').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
     </script>
 </body>
 </html>
